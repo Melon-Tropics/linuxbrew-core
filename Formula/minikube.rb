@@ -2,17 +2,17 @@ class Minikube < Formula
   desc "Run a Kubernetes cluster locally"
   homepage "https://minikube.sigs.k8s.io/"
   url "https://github.com/kubernetes/minikube.git",
-      tag:      "v1.22.0",
-      revision: "a03fbcf166e6f74ef224d4a63be4277d017bb62e"
+      tag:      "v1.23.1",
+      revision: "84d52cd81015effbdd40c632d9de13db91d48d43"
   license "Apache-2.0"
   head "https://github.com/kubernetes/minikube.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "d1ea963733dda06b43df6c1b34b87c4365ee055ce01cca8eb8bf90f2a7904468"
-    sha256 cellar: :any_skip_relocation, big_sur:       "476bb6663d4bd767e914c24b8c72cdbf3c12641aab6ac8fa59adb6b56cbe91f7"
-    sha256 cellar: :any_skip_relocation, catalina:      "5d3c3706be8d9f71cb9505fb10abb239a8dc491b68ef803030a83d431f1b1113"
-    sha256 cellar: :any_skip_relocation, mojave:        "b56e75f3f8c29eef6457c7c0d01eceb6623c5630f63f5fd2d3277cf40e08a016"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a11c92052beb48e9abae34375490cc48f84b8293969410df6923d01d3b6c2e22" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "411ea18df0188d18082243d7e1d8c8580b99b9b3863b11054298ea22d8a18eaf"
+    sha256 cellar: :any_skip_relocation, big_sur:       "2f40fec3397dbd2bb39d75f5296fb74fb15128f2db5e0cdb3b6fdf5270bcbb06"
+    sha256 cellar: :any_skip_relocation, catalina:      "5196ffa5f072726997f3d9f08bd6dca691ac9ae9006901112e239da420f0f6fa"
+    sha256 cellar: :any_skip_relocation, mojave:        "9e9f1212e1bb99a532a0697f81d6ff4b85d2a3e50962376fe3efac4dd6f48c00"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "01cca829310b55291681157e418ec6167b5690b940444948a39abe4de068ee76" # linuxbrew-core
   end
 
   depends_on "go" => :build

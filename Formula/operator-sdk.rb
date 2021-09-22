@@ -2,10 +2,10 @@ class OperatorSdk < Formula
   desc "SDK for building Kubernetes applications"
   homepage "https://coreos.com/operators/"
   url "https://github.com/operator-framework/operator-sdk.git",
-      tag:      "v1.11.0",
-      revision: "28dcd12a776d8a8ff597e1d8527b08792e7312fd"
+      tag:      "v1.12.0",
+      revision: "d3b2761afdb78f629a7eaf4461b0fb8ae3b02860"
   license "Apache-2.0"
-  head "https://github.com/operator-framework/operator-sdk.git"
+  head "https://github.com/operator-framework/operator-sdk.git", branch: "master"
 
   livecheck do
     url :stable
@@ -13,11 +13,11 @@ class OperatorSdk < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "9275b1560e3f96436dba56e41f5ee10e857c41087bef229f2e9af52a87ea71c0"
-    sha256 cellar: :any_skip_relocation, big_sur:       "b93a3d7feae8da723f49a82480d8b37473c87759c6b0c3221519dd5ab9974f38"
-    sha256 cellar: :any_skip_relocation, catalina:      "6658ca42f6b7f03fe5e9f0293b8cc3e491c1acda6d5110f3de82f472e25842c5"
-    sha256 cellar: :any_skip_relocation, mojave:        "5ecf7ad4e533ed5852e50c9eb89f1f93432eee0010d36346f6741881b7a456fd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "517e25e03abd6dadbf3461e6fcba0ef3a481384911b4117b9440fdc926b5e4c3" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "fbf829066a9367124d5ca2f8608d08b3c5232a60f1c86604543e456bd458846a"
+    sha256 cellar: :any_skip_relocation, big_sur:       "0843e544a5aff2813c34308dfcf31b3776fc1a48ac0438541caba441411fc5f0"
+    sha256 cellar: :any_skip_relocation, catalina:      "f803282b943e2a55a210d7138363d150a34ad83e96332d2378efdc49c34268ae"
+    sha256 cellar: :any_skip_relocation, mojave:        "0b301b84823537a14bb080753598800e7e292b80f9f5e7a0f21fb63eee864822"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "221b114bfc42c49a6d5bb5b27a54794ddcd74b155ba8087aa54ab8991a715601" # linuxbrew-core
   end
 
   depends_on "go"

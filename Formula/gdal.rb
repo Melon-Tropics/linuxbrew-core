@@ -1,10 +1,10 @@
 class Gdal < Formula
   desc "Geospatial Data Abstraction Library"
   homepage "https://www.gdal.org/"
-  url "https://download.osgeo.org/gdal/3.3.1/gdal-3.3.1.tar.xz"
-  sha256 "48ab00b77d49f08cf66c60ccce55abb6455c3079f545e60c90ee7ce857bccb70"
+  url "https://download.osgeo.org/gdal/3.3.2/gdal-3.3.2.tar.xz"
+  sha256 "630e34141cf398c3078d7d8f08bb44e804c65bbf09807b3610dcbfbc37115cc3"
   license "MIT"
-  revision 3
+  revision 2
 
   livecheck do
     url "https://download.osgeo.org/gdal/CURRENT/"
@@ -12,10 +12,11 @@ class Gdal < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "63d1f92d6123d4f3fb5142b16a2d8898b0b48aa2d9133651c09f974f1575a560"
-    sha256 big_sur:       "4895d4f179c3264abe86fab90d673571f6a3a559fa5d4d27ddf16d2007cf372f"
-    sha256 catalina:      "47d4586c2b7bbbea2f70dbaee7f2aaea2e8d7d46bea69d2d476ad63d1a950015"
-    sha256 mojave:        "0f57ca35e42fd11e201056124b7c077a7ef3ca73e3857581c5fce28f74ddc002"
+    sha256 arm64_big_sur: "7f703621e923ba2e9d695b30ac1b37a640197b0ef9ddc41526ac4c1d73490ecc"
+    sha256 big_sur:       "cd8c20865000001d808f127737430e5be46124ff74e6b3577184a8f88d52e66f"
+    sha256 catalina:      "e5f3ea662fa3683a641994c47d380103e37ce1a7f985bf417a891bf2d92e1c26"
+    sha256 mojave:        "41ff6ce70db407eeb712b9700aa12d99a2d11c67d4d13c13e5554ac3fed80c0a"
+    sha256 x86_64_linux:  "045bb638ddf8d61b748c320cfb8ce30aa8dedba555f04d76a0d4e903415d6688" # linuxbrew-core
   end
 
   head do
@@ -57,16 +58,16 @@ class Gdal < Formula
   uses_from_macos "curl"
 
   on_linux do
-    depends_on "bash-completion"
+    depends_on "util-linux"
+    depends_on "gcc"
   end
 
   conflicts_with "avce00", because: "both install a cpl_conv.h header"
   conflicts_with "cpl", because: "both install cpl_error.h"
 
-  def install
-    # Fixes: error: inlining failed in call to always_inline __m128i _mm_shuffle_epi8
-    ENV.append_to_cflags "-msse4.1" if ENV["HOMEBREW_GITHUB_ACTIONS"]
+  fails_with gcc: "5"
 
+  def install
     args = [
       # Base configuration
       "--prefix=#{prefix}",
@@ -119,6 +120,7 @@ class Gdal < Formula
       "--without-mysql",
       "--without-perl",
       "--without-python",
+
       # Unsupported backends are either proprietary or have no compatible version
       # in Homebrew. Podofo is disabled because Poppler provides the same
       # functionality and then some.
@@ -142,11 +144,16 @@ class Gdal < Formula
       "--without-sosi",
     ]
 
-    on_macos do
+    if OS.mac?
       args << "--with-curl=/usr/bin/curl-config"
-    end
-    on_linux do
+      args << "--with-opencl"
+    else
       args << "--with-curl=#{Formula["curl"].opt_bin}/curl-config"
+
+      # The python build needs libgdal.so, which is located in .libs
+      ENV.append "LDFLAGS", "-L#{buildpath}/.libs"
+      # The python build needs gnm headers, which are located in the gnm folder
+      ENV.append "CFLAGS", "-I#{buildpath}/gnm"
     end
 
     system "./configure", *args

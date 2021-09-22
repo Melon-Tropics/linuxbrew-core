@@ -1,11 +1,13 @@
 class Glooctl < Formula
   desc "Envoy-Powered API Gateway"
   homepage "https://docs.solo.io/gloo/latest/"
+  # NOTE: Please wait until the newest stable release is finished building and
+  # no longer marked as "Pre-release" before creating a PR for a new version.
   url "https://github.com/solo-io/gloo.git",
-      tag:      "v1.8.11",
-      revision: "00c2d3d623cc415f9d3a5eb069fbee02d7e00a6b"
+      tag:      "v1.8.16",
+      revision: "641f96cefbd45f2dd2b9906f5566ea6508f2fb1e"
   license "Apache-2.0"
-  head "https://github.com/solo-io/gloo.git"
+  head "https://github.com/solo-io/gloo.git", branch: "master"
 
   livecheck do
     url :stable
@@ -13,11 +15,11 @@ class Glooctl < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "47f166d3e35492770bd88ec45b800e6904ee58f8eda912b0a16d55ef3423b0e6"
-    sha256 cellar: :any_skip_relocation, big_sur:       "b959a5d0b93483424df75edbd10d15895d59bbca64e6808c8c437a13059af377"
-    sha256 cellar: :any_skip_relocation, catalina:      "2f6cb7f23f548ef7cd453db5e756f4b857d39387d4177a459d3cf5f2998a515b"
-    sha256 cellar: :any_skip_relocation, mojave:        "547468685cd42d54fcaa3a9aefd580638de00af581d1520c9d6311f80fd941d9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d955207988ccb4f8c1e29b6e6e2b71d51c25b8498ffe63458e438cdd03aa9bd2" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "2bebc29273296f2ab1082b379e3b5a86427b7a03d9ee4a1b7569f8a8b5336070"
+    sha256 cellar: :any_skip_relocation, big_sur:       "04242d416d3feac99a9ca2a02c0cfc04b9a0a42dd51a3203ff60195bdeb1f67c"
+    sha256 cellar: :any_skip_relocation, catalina:      "03ef7e73c28e17b09dd72ddaa896ce9c1dfb43602a21bcb7ef2d0826d459d066"
+    sha256 cellar: :any_skip_relocation, mojave:        "506ed06c58a2861047d003edd80bcb50744d8660dbfc2e48da70546ef8ebf030"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "02b39c97fa2672191a6c0c800785828b404e6034a086d55951d6107952f49d1d" # linuxbrew-core
   end
 
   depends_on "go" => :build

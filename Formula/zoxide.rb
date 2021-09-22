@@ -1,16 +1,16 @@
 class Zoxide < Formula
   desc "Shell extension to navigate your filesystem faster"
   homepage "https://github.com/ajeetdsouza/zoxide"
-  url "https://github.com/ajeetdsouza/zoxide/archive/v0.7.4.tar.gz"
-  sha256 "4b54c751fcd47e08eb8e81a6f2a534db61a3d51f261f8a28dc89117795cf1aeb"
+  url "https://github.com/ajeetdsouza/zoxide/archive/v0.7.5.tar.gz"
+  sha256 "138dad27a7a272171ee28aa34a10c3552154121c01bbe7b613cd4d12bfb07e41"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "34062a0589b251a622ebb9fd2f9ec76b5b40a5f76dfc07b708cfce5fb1cc3e98"
-    sha256 cellar: :any_skip_relocation, big_sur:       "dadd5583361bfb3610ad23377330dbfdc927c8ec03628d6d01e02b1fd19fee78"
-    sha256 cellar: :any_skip_relocation, catalina:      "e9842beaa2e390b267b3591f71f0bfad7e6489e3c098b64d0e3c80da26b4b0f1"
-    sha256 cellar: :any_skip_relocation, mojave:        "252d7e4721aaf564269ed76953ccd5f60c07c0841ca357d3884140fa74ea4fa7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f34ed18b065cc443239df61822186becb3881e68e3cf7434b2347c8f08215077" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "348e4070868a24b3eeceaeb2d6007813fc22f10f57ea3d0a3c5cea592c11b1de"
+    sha256 cellar: :any_skip_relocation, big_sur:       "b3ca78eeca3939e6b605cf5b7b686c7e6b7e23d2d452edf33c34bd2c130047dd"
+    sha256 cellar: :any_skip_relocation, catalina:      "b942b8bba6d03f72566d317837330d577c0d0fff45573baf3f2642ab88b50479"
+    sha256 cellar: :any_skip_relocation, mojave:        "01170393b63e4764b65a9e443dd46c8d4f952cff9114b6fe400d895e90de3ea7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b0cd12d8a9ea7ebfa0970d799baf7d1b3d3413c1b30a3c43421872d93db457fe" # linuxbrew-core
   end
 
   depends_on "rust" => :build

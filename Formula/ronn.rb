@@ -22,6 +22,10 @@ class Ronn < Formula
 
   uses_from_macos "ruby"
 
+  on_linux do
+    depends_on "util-linux" => :test # for `col`
+  end
+
   def install
     ENV["GEM_HOME"] = libexec
     system "gem", "build", "ronn.gemspec"
@@ -42,8 +46,6 @@ class Ronn < Formula
     system bin/"ronn", "--date", "1970-01-01", "test.ronn"
     assert_equal <<~EOS, shell_output("groff -t -man -Tascii test.7 | col -bx")
       SIMPLE(7)                                                            SIMPLE(7)
-
-
 
       1mNAME0m
              1msimple 22m- a simple ronn example

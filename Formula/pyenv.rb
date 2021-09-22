@@ -1,8 +1,8 @@
 class Pyenv < Formula
   desc "Python version management"
   homepage "https://github.com/pyenv/pyenv"
-  url "https://github.com/pyenv/pyenv/archive/v2.0.5.tar.gz"
-  sha256 "c068072d8e1e61f17b076ee2118f455cef81199a01a078ed05934660f7035a0c"
+  url "https://github.com/pyenv/pyenv/archive/v2.0.7.tar.gz"
+  sha256 "36dbf6fa9aaf97da2b0d4c829e4e4acd74e8f9ed4439c31c9e597166f838d240"
   license "MIT"
   version_scheme 1
   head "https://github.com/pyenv/pyenv.git", branch: "master"
@@ -13,11 +13,11 @@ class Pyenv < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "3c6e087a05b0069830feaccf98ec408f5dd32c833900523fbd8752c76f53b7fc"
-    sha256 cellar: :any,                 big_sur:       "364691f8daf7817287f8d4baeece0f35d103f149af7552a14d5c5f8273902f30"
-    sha256 cellar: :any,                 catalina:      "a0a1b02c6e45a9f97389d7a71dde680374789a07301299e54e58dfdfc74e733f"
-    sha256 cellar: :any,                 mojave:        "16db6ad6c8905ce7e924661250d4dd1a112747892dc11bd067674a648c6262f4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "51b725c72bd28366f77e6050cbe8fa0bb3b50f18d8182bd425ca0e425f3534be" # linuxbrew-core
+    sha256 cellar: :any,                 arm64_big_sur: "0a10714b40198d0bea81b7dd282bc3565b870cfbcf02309104c0408b570618c2"
+    sha256 cellar: :any,                 big_sur:       "e8f8882207ec4d9d3a6d904ea81afef33e59c9c49dfeed34692e208b857564af"
+    sha256 cellar: :any,                 catalina:      "b6a91e6b68d1951141bafd70d1612cdb369b18874a17cc058671cddb763706f2"
+    sha256 cellar: :any,                 mojave:        "cde37127f8c2179ff34ff2a888e7b95ad299e1139297c958cbc4bfb2b4d9827f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ffe64a4566542b8bdab0c8ad232004409db1fe58b2930dbc26d3de66923a3fbd" # linuxbrew-core
   end
 
   depends_on "autoconf"

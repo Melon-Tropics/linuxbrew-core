@@ -1,17 +1,17 @@
 class Grafana < Formula
   desc "Gorgeous metric visualizations and dashboards for timeseries databases"
   homepage "https://grafana.com"
-  url "https://github.com/grafana/grafana/archive/v8.1.2.tar.gz"
-  sha256 "068c4944089298cf30ebcf0da2a9f9e896ba690a78866c007ce7e54447d6b40a"
+  url "https://github.com/grafana/grafana/archive/v8.1.5.tar.gz"
+  sha256 "8b821910affa5ba3d2b72f77aff05a4c5150e9cccd1416d7621fbe2ea3aaa2c8"
   license "AGPL-3.0-only"
   head "https://github.com/grafana/grafana.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "4d4c868960d687d05f3267973ce596cb59074fb3604cf4e0be8422da85903b72"
-    sha256 cellar: :any_skip_relocation, big_sur:       "d94d3d2f76d0f330efbd7197a7363617ea16517b2e8bddc07ff0267462bfe1a8"
-    sha256 cellar: :any_skip_relocation, catalina:      "8129b71eea0b25fd3c5e11055a4db9c6bd561af8ff1a9fa12e6a3e2ca5710080"
-    sha256 cellar: :any_skip_relocation, mojave:        "22f7f3480ed0cc336b79c130a11ba174e7488eaf6fa426b870fa474bc268ad29"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3a5fd1e5b7acc3838cdc968441d8dd1b6cda6509fa4ee4b0a49d6239028b3742" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "e7579c592493b1e04414977a6fb53dad33c703b629700fb07baa651e42e25801"
+    sha256 cellar: :any_skip_relocation, big_sur:       "18221352e5edf374ee2c4cc538ff018a97c7aab1237fa4f849586c20d8d657fa"
+    sha256 cellar: :any_skip_relocation, catalina:      "75d4b6d9c73ed764b078c833aa941006bb4f0d837c04211766cbfaf2be564375"
+    sha256 cellar: :any_skip_relocation, mojave:        "4d919556553ae0dcde109ba5888aa92888f96e5af7770a4a44ec0e4d0337e109"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e8a62cdce36fee33902cba8efb0f8e4694987797c6b2122688a339e935b0f68a"
   end
 
   depends_on "go" => :build
@@ -32,11 +32,10 @@ class Grafana < Formula
 
     system "node_modules/webpack/bin/webpack.js", "--config", "scripts/webpack/webpack.prod.js"
 
-    on_macos do
+    if OS.mac?
       bin.install Dir["bin/darwin-*/grafana-cli"]
       bin.install Dir["bin/darwin-*/grafana-server"]
-    end
-    on_linux do
+    else
       bin.install "bin/linux-amd64/grafana-cli"
       bin.install "bin/linux-amd64/grafana-server"
     end

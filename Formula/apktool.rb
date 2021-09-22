@@ -1,9 +1,13 @@
 class Apktool < Formula
   desc "Tool for reverse engineering 3rd party, closed, binary Android apps"
   homepage "https://github.com/iBotPeaches/Apktool"
-  url "https://github.com/iBotPeaches/Apktool/releases/download/v2.5.0/apktool_2.5.0.jar"
-  sha256 "b392d7cb99b592e9c5acc3c06f1b0f180edde96c66b86b3d6932b7c0c4079fe4"
+  url "https://github.com/iBotPeaches/Apktool/releases/download/v2.6.0/apktool_2.6.0.jar"
+  sha256 "f750a3cd2c1f942f27f5f7fd5d17eada3bdaff0a6643f49db847e842579fdda5"
   license "Apache-2.0"
+
+  bottle do
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "d013fb48c7494e464257834cd7fa11a3c0ac44a4eebb46dd5c6f1a447915bfd0" # linuxbrew-core
+  end
 
   depends_on arch: :x86_64 # openjdk@8 doesn't support ARM
   depends_on "openjdk@8"

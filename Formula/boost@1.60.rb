@@ -46,10 +46,9 @@ class BoostAT160 < Formula
   def install
     # Force boost to compile with the desired compiler
     open("user-config.jam", "a") do |file|
-      on_macos do
+      if OS.mac?
         file.write "using darwin : : #{ENV.cxx} ;\n"
-      end
-      on_linux do
+      else
         file.write "using gcc : : #{ENV.cxx} ;\n"
       end
     end

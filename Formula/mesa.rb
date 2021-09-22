@@ -6,19 +6,20 @@ class Mesa < Formula
   url "https://mesa.freedesktop.org/archive/mesa-21.2.1.tar.xz"
   sha256 "2c65e6710b419b67456a48beefd0be827b32db416772e0e363d5f7d54dc01787"
   license "MIT"
+  revision 1
   head "https://gitlab.freedesktop.org/mesa/mesa.git", branch: "main"
 
   livecheck do
-    url "https://www.mesa3d.org/news/"
-    regex(/>\s*Mesa v?(\d+(?:\.\d+)+) is released\s*</i)
+    url "https://mesa.freedesktop.org/archive/"
+    regex(/href=.*?mesa[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
   bottle do
-    sha256 arm64_big_sur: "823c5620d718ecc237cae1553b3890dff2b4da187eb042ef80dd7295b65652b9"
-    sha256 big_sur:       "dd91e55a6451d5ae72507142e89c1c87fd6c140af37cd1401f48eacd3e25f05a"
-    sha256 catalina:      "a1c66d822a58a9bde2cb968c80c45fdb571b415830e4a4c7bc0cada55a705cfd"
-    sha256 mojave:        "d6324a830826107cc9d8904f3a459e3d992e3ab28c43cffd937f0d7b173e227f"
-    sha256 x86_64_linux:  "a8af146e5b4cb3713873916de311359d588605ae54855d8ec8502a768ffcf4e7"
+    sha256 arm64_big_sur: "e04319312192941e0958a7622eb0ca68fb9cb51d5122affdba32359c7c3a8930"
+    sha256 big_sur:       "322ba38e53336aab63838e86882b478be2fde40204f542215ccaad2a4c654cff"
+    sha256 catalina:      "257bea3d2ee0d5db58f02a454b5fcc6d81ee843d92c3a7964a0aa33e3f8b5775"
+    sha256 mojave:        "3c1bc6f6612fbdcbc80b54ed067a0c40dd54cc51ba24d65325b6ef457dd26060"
+    sha256 x86_64_linux:  "f985dea20697b9a544d23e432e838464878bf0402acf75f9868f415a79b9b7fb" # linuxbrew-core
   end
 
   depends_on "meson" => :build
@@ -84,7 +85,7 @@ class Mesa < Formula
     mkdir "build" do
       args = ["-Db_ndebug=true"]
 
-      on_linux do
+      if OS.linux?
         args << "-Dplatforms=x11,wayland"
         args << "-Dglx=auto"
         args << "-Ddri3=true"
@@ -106,7 +107,7 @@ class Mesa < Formula
       system "ninja", "install"
     end
 
-    on_linux do
+    if OS.linux?
       # Strip executables/libraries/object files to reduce their size
       system("strip", "--strip-unneeded", "--preserve-dates", *(Dir[bin/"**/*", lib/"**/*"]).select do |f|
         f = Pathname.new(f)

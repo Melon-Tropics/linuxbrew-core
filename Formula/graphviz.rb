@@ -13,7 +13,7 @@ class Graphviz < Formula
     sha256 big_sur:       "5471bd101d6390a95c80af2b869540e5b1aea58878b358cf34f504e1f86c6eba"
     sha256 catalina:      "aeba9f5db7842b4e2a484dc38a26fa98f8f32e9fda4d6b7d9a87aaf3fa6edf3a"
     sha256 mojave:        "73af8815c464da252348f4e7eb99eecc4ce0c5d8423175c1aa67ce43706c3651"
-    sha256 x86_64_linux:  "5a200f1fa950c17339ef21b86edc34769cebb2813b2be5db7d42fce3a0cccfd2"
+    sha256 x86_64_linux:  "5a200f1fa950c17339ef21b86edc34769cebb2813b2be5db7d42fce3a0cccfd2" # linuxbrew-core
   end
 
   depends_on "autoconf" => :build

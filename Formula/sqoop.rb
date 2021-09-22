@@ -13,6 +13,9 @@ class Sqoop < Formula
     regex(%r{href=["']?v?((?!\d+\.9\d+)\d+(?:\.\d+)+)/?["' >]}i)
   end
 
+  # See https://attic.apache.org/projects/sqoop.html
+  deprecate! date: "2021-06-16", because: :deprecated_upstream
+
   depends_on "coreutils"
   depends_on "hadoop"
   depends_on "hbase"

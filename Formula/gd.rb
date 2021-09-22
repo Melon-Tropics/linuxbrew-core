@@ -1,16 +1,16 @@
 class Gd < Formula
   desc "Graphics library to dynamically manipulate images"
   homepage "https://libgd.github.io/"
-  url "https://github.com/libgd/libgd/releases/download/gd-2.3.2/libgd-2.3.2.tar.xz"
-  sha256 "478a047084e0d89b83616e4c2cf3c9438175fb0cc55d8c8967f06e0427f7d7fb"
+  url "https://github.com/libgd/libgd/releases/download/gd-2.3.3/libgd-2.3.3.tar.xz"
+  sha256 "3fe822ece20796060af63b7c60acb151e5844204d289da0ce08f8fdf131e5a61"
   license :cannot_represent
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "c625bf1de35375334370901cfb5283b169253a2616e2cd7c5299a110fe07672e"
-    sha256 cellar: :any,                 big_sur:       "2c746f463d1b0ceaa2a9986b9ace87da6ec8b99b1a1362383d2375b067dc7010"
-    sha256 cellar: :any,                 catalina:      "aa93cd58d9694c86299445e73750e41b5740bc6ea5b247032ed3c71eca5cbce4"
-    sha256 cellar: :any,                 mojave:        "59e7dada9e961a52a5db6d14ad39985310bd6dfdbf4b9a4a321280d880b110bc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b94dc351c8a0c05536601c885a09552942e8e978432c2e443b10406a0c578d9d" # linuxbrew-core
+    sha256 cellar: :any,                 arm64_big_sur: "a3b9c0b7777a4b7d03ffd55dd773a14e0700b5926e70e66d8417de686de0a9a3"
+    sha256 cellar: :any,                 big_sur:       "724abee79175bb635f8709eff2a5d54607d6ec2a4eca129146756c4518affe06"
+    sha256 cellar: :any,                 catalina:      "656f9a427793adf80ccdcd0b0c56a14859773f6ea5e5d2f7a366fd2e9475fa5b"
+    sha256 cellar: :any,                 mojave:        "368e3705affa28335c24419c03af2f02abaeaca87d0285ea14bdda2a93e66604"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "51a4a061dc98cdd207ee1c074f6ee977461759c4a72778d56af34cb1f5ec7f21" # linuxbrew-core
   end
 
   head do
@@ -40,7 +40,28 @@ class Gd < Formula
   end
 
   test do
-    system "#{bin}/pngtogd", test_fixtures("test.png"), "gd_test.gd"
-    system "#{bin}/gdtopng", "gd_test.gd", "gd_test.png"
+    (testpath/"test.c").write <<~EOS
+      #include "gd.h"
+      #include <stdio.h>
+
+      int main() {
+        gdImagePtr im;
+        FILE *pngout;
+        int black;
+        int white;
+
+        im = gdImageCreate(64, 64);
+        black = gdImageColorAllocate(im, 0, 0, 0);
+        white = gdImageColorAllocate(im, 255, 255, 255);
+        gdImageLine(im, 0, 0, 63, 63, white);
+        pngout = fopen("test.png", "wb");
+        gdImagePng(im, pngout);
+        fclose(pngout);
+        gdImageDestroy(im);
+      }
+    EOS
+    system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lgd", "-o", "test"
+    system "./test"
+    assert_path_exists "#{testpath}/test.png"
   end
 end

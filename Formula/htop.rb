@@ -1,10 +1,9 @@
 class Htop < Formula
   desc "Improved top (interactive process viewer)"
   homepage "https://htop.dev/"
-  url "https://github.com/htop-dev/htop/archive/3.0.5.tar.gz"
-  sha256 "4c2629bd50895bd24082ba2f81f8c972348aa2298cc6edc6a21a7fa18b73990c"
+  url "https://github.com/htop-dev/htop/archive/3.1.0.tar.gz"
+  sha256 "200a4f9331d0e5048bf9bda6a8dee38248c557e471b9e57ff3784853efd613a9"
   license "GPL-2.0-or-later"
-  revision 1 unless OS.mac?
   head "https://github.com/htop-dev/htop.git"
 
   livecheck do
@@ -13,12 +12,11 @@ class Htop < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_big_sur: "4dd5d67e6a0ce026916e082e834a9a3e8e8e01c4ac3a79a3de29119dd6cc8393"
-    sha256 cellar: :any,                 big_sur:       "21f7d036b92a40bb57dc28c64249f137efcbec7489190944d8c38f940c86df9f"
-    sha256 cellar: :any,                 catalina:      "0b9cb4738ad23eed5e2d24bb2bdc10e662c3b54ba7feb22d798fd9107ace5e21"
-    sha256 cellar: :any,                 mojave:        "7be858d053b14ab834cd1a1832beaf367501639d17c7a43c5cc0e563c025a4af"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "321d0374e65b94b2e8dd81e789d19d04bb35f0d4b9c4e210524a7c9e1d82fe3f" # linuxbrew-core
+    sha256 cellar: :any,                 arm64_big_sur: "be94287535d61d1c180bace2ec77492a8de092539ace76b770d53c5234704e69"
+    sha256 cellar: :any,                 big_sur:       "f651173535b859cecca10d2dfab28ff78c184cf1e16455ec296fae2d509d2aad"
+    sha256 cellar: :any,                 catalina:      "2601b6b120df50c7790d5b2f8dcf06848ddae0b35315affec641dec17271fa46"
+    sha256 cellar: :any,                 mojave:        "7c9b9ac633b0339fead96c6e611b87bcc6df9f7fe0947dac76908340290707c2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bb5ac6bbfb4109cc5824ae40753bcab7fb08c9dd5b87ff0f41ea76e369d92545" # linuxbrew-core
   end
 
   depends_on "autoconf" => :build
@@ -35,7 +33,7 @@ class Htop < Formula
   def install
     system "./autogen.sh"
     args = ["--prefix=#{prefix}"]
-    on_linux { args << "--enable-sensors" }
+    args << "--enable-sensors" if OS.linux?
     system "./configure", *args
     system "make", "install"
   end

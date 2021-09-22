@@ -1,12 +1,12 @@
 class Typedb < Formula
   desc "Distributed hyper-relational database for knowledge engineering"
   homepage "https://vaticle.com/"
-  url "https://github.com/vaticle/typedb/releases/download/2.3.3/typedb-all-mac-2.3.3.zip"
-  sha256 "29394e6438ebd23c9638714013540359e72a6185b1a27207397e0056d4d4defb"
+  url "https://github.com/vaticle/typedb/releases/download/2.4.0/typedb-all-mac-2.4.0.zip"
+  sha256 "5691486a031ed021ebb1d38f5346a7e70bceb8bd92e2e197ac585c2dfb38b3a9"
   license "AGPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "a92e1c7b621ca83bd664f5b22649507b7ad74735d7846f4f265b90f3e522ca46" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "bf33c8f2ff532070ac9a2416b81dd914e23ad3062d2e62191dcaf43ef309018d" # linuxbrew-core
   end
 
   depends_on "openjdk@11"

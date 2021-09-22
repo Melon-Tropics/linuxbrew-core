@@ -3,16 +3,16 @@ class Glib < Formula
 
   desc "Core application library for C"
   homepage "https://developer.gnome.org/glib/"
-  url "https://download.gnome.org/sources/glib/2.68/glib-2.68.4.tar.xz"
-  sha256 "62fd061d08a75492617e625a73e2c05e259f831acbb8e1f8b9c81f23f7993a3b"
+  url "https://download.gnome.org/sources/glib/2.70/glib-2.70.0.tar.xz"
+  sha256 "200d7df811c5ba634afbf109f14bb40ba7fde670e89389885da14e27c0840742"
   license "LGPL-2.1-or-later"
 
   bottle do
-    sha256 arm64_big_sur: "e21de4937ed890a80511c967b5b82a22b847aa088476bf4edd549d3128839184"
-    sha256 big_sur:       "ad356cbc8651147276eff312f762a05fabe846d598886858d4960e6935795823"
-    sha256 catalina:      "392a02c839b4b05e9575afb18c3357038d423a146a103e44fc09670168baaeed"
-    sha256 mojave:        "38232f3c93be6a25722c2124f9d7f80220c4ad80a76dc67691bdf4c8468f4ba4"
-    sha256 x86_64_linux:  "e062c3cc7d0f672090c9fc7d7375a8b1c4a90688c68ef7ff1d674be3b61a543d" # linuxbrew-core
+    sha256 arm64_big_sur: "ad3316e2792c4c82f6821617c9eee6a6612663a982d87bf18b834328061cf63c"
+    sha256 big_sur:       "7d4a5cf540591f124ee50ee8c344ba823d170946350e71559a52a0e21eb38a81"
+    sha256 catalina:      "9050f98ed8bdaf71deda193160609a1a925824e7c437a2b671d6c2b6d0877254"
+    sha256 mojave:        "8d2fcda0fdbc4d98142a0638de313c2dd5333a0cc5388f7a7ea1550a9d88c0c0"
+    sha256 x86_64_linux:  "430f2977a6deead4a5d51e474452dad2a78036792c07e780c5809b7e46b7cf60" # linuxbrew-core
   end
 
   depends_on "meson" => :build
@@ -61,7 +61,7 @@ class Glib < Formula
               "giomoduledir=#{HOMEBREW_PREFIX}/lib/gio/modules",
               "giomoduledir=${libdir}/gio/modules"
 
-    on_macos do
+    if OS.mac?
       # `pkg-config --libs glib-2.0` includes -lintl, and gettext itself does not
       # have a pkgconfig file, so we add gettext lib and include paths here.
       gettext = Formula["gettext"].opt_prefix

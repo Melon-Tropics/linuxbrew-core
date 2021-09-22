@@ -36,7 +36,7 @@ class Gedit < Formula
 
   def install
     ENV["DESTDIR"] = "/"
-    on_linux { ENV.append "LDFLAGS", "-Wl,-rpath,#{lib}/gedit" }
+    ENV.append "LDFLAGS", "-Wl,-rpath,#{lib}/gedit" if OS.linux?
 
     mkdir "build" do
       system "meson", *std_meson_args, ".."
@@ -132,11 +132,10 @@ class Gedit < Formula
       -lpeas-1.0
       -lpeas-gtk-1.0
     ]
-    on_macos do
-      flags << "-lintl"
-    end
-    on_linux do
-      flags << "-Wl,-rpath,#{lib}/gedit"
+    flags << if OS.mac?
+      "-lintl"
+    else
+      "-Wl,-rpath,#{lib}/gedit"
     end
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"

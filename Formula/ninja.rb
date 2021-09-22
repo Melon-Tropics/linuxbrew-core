@@ -4,7 +4,7 @@ class Ninja < Formula
   url "https://github.com/ninja-build/ninja/archive/v1.10.2.tar.gz"
   sha256 "ce35865411f0490368a8fc383f29071de6690cbadc27704734978221f25e2bed"
   license "Apache-2.0"
-  head "https://github.com/ninja-build/ninja.git"
+  head "https://github.com/ninja-build/ninja.git", branch: "master"
 
   livecheck do
     url :stable
@@ -21,6 +21,8 @@ class Ninja < Formula
   end
 
   depends_on "python@3.9"
+
+  uses_from_macos "curl" => :test
 
   def install
     py = Formula["python@3.9"].opt_bin/"python3"

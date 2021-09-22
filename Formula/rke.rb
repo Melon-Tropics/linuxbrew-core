@@ -1,16 +1,16 @@
 class Rke < Formula
   desc "Rancher Kubernetes Engine, a Kubernetes installer that works everywhere"
   homepage "https://rancher.com/docs/rke/latest/en/"
-  url "https://github.com/rancher/rke/archive/v1.2.11.tar.gz"
-  sha256 "000965cd009f882e25f218a1eb696dd0733d9e504e994f17ac490d4741a77d8e"
+  url "https://github.com/rancher/rke/archive/v1.3.1.tar.gz"
+  sha256 "bdd8d79214544a4f2e262746b518b4f7f26352b94c63578fe1b582f6079b7462"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "325252e7159d95004de0eb557659d1479f592877817eecc1ce6dcfde3665140a"
-    sha256 cellar: :any_skip_relocation, big_sur:       "ea580e977b241d113a0b184089990df398c4a71de278b269322c0e4aabfc4777"
-    sha256 cellar: :any_skip_relocation, catalina:      "f0e271da5d927f5d427f381f7a8b833a0c255fc24e3b6158c3d96d2ebcf0b80a"
-    sha256 cellar: :any_skip_relocation, mojave:        "4497e78446a2c02ccc65559f83f4c34bbe6c57125a517e0ea5af5f96720a214b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e4e459c07022f22bc61c7fbdf8cbd00f4a03c5890370cf265dd54617c5a2ee79" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "5650ea5362d51bf6f0ce57ed6af90a270deb2556a6bbc08c37516b2a5d3fa417"
+    sha256 cellar: :any_skip_relocation, big_sur:       "4b35e68b991c426289eb36312e62b9819a98c38ba73d3bb53f91993c51578448"
+    sha256 cellar: :any_skip_relocation, catalina:      "3237d3b70159e54b8a0fc21c3a8eb7548432910c2c8ded4a11ae005b34382454"
+    sha256 cellar: :any_skip_relocation, mojave:        "fad78490683f8c204fe7edbd43d721f2c0de0e482cdf57e415f7e4a6f560c2a3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a328813fe084e09e02d415c8ed17889b4c23de0d36ca5970158e32dda9c5eb9f" # linuxbrew-core
   end
 
   depends_on "go" => :build

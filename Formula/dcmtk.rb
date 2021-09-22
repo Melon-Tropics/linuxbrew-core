@@ -31,15 +31,7 @@ class Dcmtk < Formula
       system "cmake", "-DBUILD_SHARED_LIBS=ON", *std_cmake_args, ".."
       system "make", "install"
 
-      on_macos do
-        inreplace lib/"cmake/dcmtk/DCMTKConfig.cmake", "#{HOMEBREW_SHIMS_PATH}/mac/super/", ""
-      end
-
-      on_linux do
-        if File.readlines(lib/"cmake/dcmtk/DCMTKConfig.cmake").grep(/#{HOMEBREW_SHIMS_PATH}/o).any?
-          inreplace lib/"cmake/dcmtk/DCMTKConfig.cmake", "#{HOMEBREW_SHIMS_PATH}/linux/super/", ""
-        end
-      end
+      inreplace lib/"cmake/dcmtk/DCMTKConfig.cmake", Superenv.shims_path, ""
     end
   end
 

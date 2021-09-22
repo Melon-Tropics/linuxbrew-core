@@ -5,6 +5,13 @@ class FabricInstaller < Formula
   sha256 "192d60fb544a45edca589a4f73d9d3df93a7f7b68a407c0403e9e1802faf7668"
   license "Apache-2.0"
 
+  # The first-party download page (https://fabricmc.net/use/) uses JavaScript
+  # to create download links, so we check the related JSON data for versions.
+  livecheck do
+    url "https://meta.fabricmc.net/v2/versions/installer"
+    regex(/["']url["']:\s*["'][^"']*?fabric-installer[._-]v?(\d+(?:\.\d+)+)\.jar/i)
+  end
+
   bottle do
     sha256 cellar: :any_skip_relocation, x86_64_linux: "3ffbf01240ef8aabe05e88566a73684f3c419b61a238ddf4e981c8ade42a3e3f" # linuxbrew-core
   end

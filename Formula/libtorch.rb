@@ -10,7 +10,7 @@ class Libtorch < Formula
 
   livecheck do
     url :stable
-    strategy :github_latest
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
   end
 
   bottle do
@@ -58,7 +58,7 @@ class Libtorch < Formula
       system "cmake", "..", *std_cmake_args, *args
 
       # Avoid references to Homebrew shims
-      inreplace "caffe2/core/macros.h", %r{#{HOMEBREW_SHIMS_PATH}/[^/]+/super/#{Regexp.escape(ENV.cxx)}}, ENV.cxx
+      inreplace "caffe2/core/macros.h", Superenv.shims_path/ENV.cxx, ENV.cxx
 
       system "make"
       system "make", "install"

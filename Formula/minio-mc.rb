@@ -2,11 +2,11 @@ class MinioMc < Formula
   desc "Replacement for ls, cp and other commands for object storage"
   homepage "https://github.com/minio/mc"
   url "https://github.com/minio/mc.git",
-      tag:      "RELEASE.2021-07-27T06-46-19Z",
-      revision: "addaf66de8af5d865a6102320727e8a5dbcacdb6"
-  version "20210727064619"
+      tag:      "RELEASE.2021-09-02T09-21-27Z",
+      revision: "f661334f3d61c870fdf55f1db238ea7268175ad5"
+  version "20210902092127"
   license "AGPL-3.0-or-later"
-  head "https://github.com/minio/mc.git"
+  head "https://github.com/minio/mc.git", branch: "master"
 
   livecheck do
     url :stable
@@ -17,23 +17,16 @@ class MinioMc < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "2063b187b7dbb836f818fcec3a4639d4e64c96d9d1f6d939e506762f7d369250"
-    sha256 cellar: :any_skip_relocation, big_sur:       "a862123c9c605ffe1bdbd4b5b3c627f6f61383737ad72e9a2504a4800d4fe89f"
-    sha256 cellar: :any_skip_relocation, catalina:      "8675c966db80e5f3ea209ca100f24732df12bb5076c6aabb2231dd36b79f8154"
-    sha256 cellar: :any_skip_relocation, mojave:        "866b93e19bfe8a836d4c9af018977511cefd46cfbd463b9b30102b410a44589a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ec747d29ca4c52766473c86db01955140754cb134d32a98407c04188369776f3" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "dfcfe18ae90dbe6d799bc5a9dc889c41e97cebe5d9973d47280830ca5e98bb3a"
+    sha256 cellar: :any_skip_relocation, big_sur:       "60d6c118cb607a6284309eda51aef4ea31106fb4629a7a119665ac0f683b0129"
+    sha256 cellar: :any_skip_relocation, catalina:      "068a5d0864603f733ed5658ac809c68e8e6cd30ceee5c6ec3088708ba16bed38"
+    sha256 cellar: :any_skip_relocation, mojave:        "f2febb4aa970f3cc34f076461bbdf17ee34333fefe30852681d6fea37f1c8b08"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5dee824206688b02dd677d7269a40421ee793b04f235ec15d435783218a2dc46" # linuxbrew-core
   end
 
   depends_on "go" => :build
 
   conflicts_with "midnight-commander", because: "both install an `mc` binary"
-
-  # Support go 1.17, remove after next release
-  patch do
-    url "https://github.com/minio/mc/commit/855333e4ab24804dd3dcd38988ceaed112ee62f9.patch?full_index=1"
-    sha256 "c00d331fd8d420105356d004aeecd17ef4c6332796f53a3e547218b4de7dbd41"
-  end
 
   def install
     if build.head?

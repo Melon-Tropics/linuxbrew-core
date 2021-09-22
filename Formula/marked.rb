@@ -3,12 +3,12 @@ require "language/node"
 class Marked < Formula
   desc "Markdown parser and compiler built for speed"
   homepage "https://marked.js.org/"
-  url "https://registry.npmjs.org/marked/-/marked-3.0.2.tgz"
-  sha256 "25d241753561b472915b4a233e0854b3ecf8d9202eab8a98d003afa1cb3537a1"
+  url "https://registry.npmjs.org/marked/-/marked-3.0.4.tgz"
+  sha256 "422984428c77cc28b10f2b64d3483edc8382ab835d17b12b9f9910a9faada90e"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "79f1e59fb2a582c01136a2fa72a08cb0d47b9b6061023e70627186f6b1550715" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "0a6e5db8571d251a4ea732baa90091f44c8f2cc4c6b687adb8563b0797d28a1b" # linuxbrew-core
   end
 
   depends_on "node"

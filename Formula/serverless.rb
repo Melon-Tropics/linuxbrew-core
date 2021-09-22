@@ -3,22 +3,31 @@ require "language/node"
 class Serverless < Formula
   desc "Build applications with serverless architectures"
   homepage "https://www.serverless.com/"
-  url "https://github.com/serverless/serverless/archive/v2.56.0.tar.gz"
-  sha256 "dea4e9e12ed8413e4ca42c3456e3b6c3400e14652b969fdb268b651d2319f5c7"
+  url "https://github.com/serverless/serverless/archive/v2.59.0.tar.gz"
+  sha256 "b2a222820b1cb02d35fad47000d94ebaef237ca2b574b0bbc1afaea41cb346aa"
   license "MIT"
+  head "https://github.com/serverless/serverless.git", branch: "master"
 
   bottle do
-    sha256 arm64_big_sur: "e99dda4e344aa5cfdc601f2c10997f9c0e4d55ae3ae813daf053cf1b66bafa21"
-    sha256 big_sur:       "e24f2e5c6b09b36db415d1f1681400a4f7865be5624f2ff494e50c175cd2bf33"
-    sha256 catalina:      "3424e15e6cdcf93221d4d143fbbbd351ffcab921b5e3c74c62e9afc189899033"
-    sha256 mojave:        "0fb44993c902ef0793ed3be532425809f9bcdf672e4165a5e3129d5003682499"
+    sha256                               arm64_big_sur: "3e4939a7d55f05f67ba516017427564a9a926b0e557d9d03a3b10f1e60c1821a"
+    sha256                               big_sur:       "07207e0292a471876d3848a69d987463adc3ec06a3cb7dfebfe4a0c9ee3bb3a1"
+    sha256                               catalina:      "e7bf960adc2c705cd98e51b1fe9d48b376d519dac15c24b29a37b799ab09ed70"
+    sha256                               mojave:        "183bdbe45aa0482967c0a7f384d399620542148a713fdc23b4bfe23a872fae53"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ca0ecfecc5cdab58fa5db57eacdd230f30f8b634ce94d5e49e01c5871f06da01" # linuxbrew-core
   end
 
   depends_on "node"
 
   def install
     system "npm", "install", *Language::Node.std_npm_install_args(libexec)
-    bin.install_symlink Dir["#{libexec}/bin/*"]
+    bin.install_symlink Dir[libexec/"bin/*"]
+
+    # Delete incompatible Linux CPython shared library included in dependency package.
+    # Raise an error if no longer found so that the unused logic can be removed.
+    (libexec/"lib/node_modules/serverless/node_modules/@serverless/dashboard-plugin")
+      .glob("sdk-py/serverless_sdk/vendor/wrapt/_wrappers.cpython-*-linux-gnu.so")
+      .map(&:unlink)
+      .empty? && raise("Unable to find wrapt shared library to delete.")
   end
 
   test do

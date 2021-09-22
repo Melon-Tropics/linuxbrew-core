@@ -14,6 +14,7 @@ class LibreadlineJava < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux: "97f4e0e3b95f1c5b59a6651b74dd7b0c33ee3fd1488eac22a239b93275f566ad" # linuxbrew-core
   end
 
+  depends_on arch: :x86_64 # openjdk@8 is not supported on ARM
   depends_on "openjdk@8"
   depends_on "readline"
 
@@ -34,8 +35,11 @@ class LibreadlineJava < Formula
 
     # Current Oracle JDKs put the jni.h and jni_md.h in a different place than the
     # original Apple/Sun JDK used to.
-    os = "darwin"
-    on_linux { os = "linux" }
+    os = if OS.mac?
+      "darwin"
+    else
+      "linux"
+    end
     ENV["JAVAINCLUDE"] = "#{java_home}/include"
     ENV["JAVANATINC"]  = "#{java_home}/include/#{os}"
 
@@ -47,7 +51,7 @@ class LibreadlineJava < Formula
       s.change_make_var! "JAVALIBDIR", "$(PREFIX)/share/libreadline-java"
       s.change_make_var! "JAVAINCLUDE", ENV["JAVAINCLUDE"]
       s.change_make_var! "JAVANATINC", ENV["JAVANATINC"]
-      on_macos { s.gsub! "*.so", "*.jnilib" }
+      s.gsub! "*.so", "*.jnilib" if OS.mac?
       s.gsub! "install -D", "install -c"
     end
 
@@ -59,7 +63,7 @@ class LibreadlineJava < Formula
       s.change_make_var! "INCLUDES", "-I $(JAVAINCLUDE) -I $(JAVANATINC) -I #{readline.opt_include}"
       s.change_make_var! "LIBPATH", "-L#{readline.opt_lib}"
       s.change_make_var! "CC", "cc"
-      on_macos do
+      if OS.mac?
         s.gsub! "LIB_EXT := so", "LIB_EXT := jnilib"
         s.gsub! "$(CC) -shared $(OBJECTS) $(LIBPATH) $($(TG)_LIBS) -o $@",
                 "$(CC) -install_name #{HOMEBREW_PREFIX}/lib/$(LIB_PRE)$(TG).$(LIB_EXT) " \

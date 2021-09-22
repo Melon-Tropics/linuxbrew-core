@@ -23,6 +23,10 @@ class BashCompletion < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "d8e44d076970e70be1e5d910511f582857021c4e418db385f11be9d8ff354d1d" # linuxbrew-core
   end
 
+  on_linux do
+    conflicts_with "util-linux", because: "both install `mount`, `rfkill`, and `rtcwake` completions"
+  end
+
   conflicts_with "bash-completion@2",
     because: "each are different versions of the same formula"
 
@@ -57,6 +61,7 @@ class BashCompletion < Formula
     system "bash", "-c", ". #{etc}/profile.d/bash_completion.sh"
   end
 end
+
 __END__
 --- a/completions/man
 +++ b/completions/man

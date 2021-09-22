@@ -1,17 +1,16 @@
 class Meilisearch < Formula
   desc "Ultra relevant, instant and typo-tolerant full-text search API"
   homepage "https://docs.meilisearch.com/"
-  url "https://github.com/meilisearch/MeiliSearch/archive/v0.20.0.tar.gz"
-  sha256 "a3873f9bf180184c7b9cad0c6106daea9daea47643c130dc29b6d0a8206e9bda"
+  url "https://github.com/meilisearch/MeiliSearch/archive/v0.22.0.tar.gz"
+  sha256 "26539042b75f8e9f990a90d0567a65efb6471f5bbaa9e8229e5df090cc7b9ccd"
   license "MIT"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "78b12ac7cc6d02b0e05d7f39bc1dee7b050c652a3412b12bc733aac1b667af5c"
-    sha256 cellar: :any_skip_relocation, big_sur:       "f7910799d97cf7a7d161b026a5d106a2432e96eb239194a7fed9d903e77327f1"
-    sha256 cellar: :any_skip_relocation, catalina:      "e4e78756580908dab7fccc59ac3a653f9a821630bba4f1e34e50b241b70a8d13"
-    sha256 cellar: :any_skip_relocation, mojave:        "81b40b5fb6bd5ddb0a16924999cdb7721db1d6cc9c82edb9243ecee253054223"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "70311780d7b06644a8d3659ea33bd895d14a61311c79fecaaf83867ba6673ce8" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "50a720c446745df81905222bcfe2201e4e81559baf8e085aeea42c1f987d2f15"
+    sha256 cellar: :any_skip_relocation, big_sur:       "ca41abb5b73e1485866ce927d4f7b9dfedf7f784ef9e2f4c6b7012981f262ad5"
+    sha256 cellar: :any_skip_relocation, catalina:      "90de8b725405d328539502af2d3cc4315ba527846397d415877a37b9effb066b"
+    sha256 cellar: :any_skip_relocation, mojave:        "ec908e597cbf3fad2f1b331bb6989f7570ac2e86d646c944276b0708200ba784"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "03b83939e3c0a158b2d86bcb67d80a5c2b014a209af4d15db11664b5e6ab15d4" # linuxbrew-core
   end
 
   depends_on "rust" => :build

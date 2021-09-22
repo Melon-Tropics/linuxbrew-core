@@ -1,8 +1,8 @@
 class Fastlane < Formula
   desc "Easiest way to build and release mobile apps"
   homepage "https://fastlane.tools"
-  url "https://github.com/fastlane/fastlane/archive/2.192.0.tar.gz"
-  sha256 "e9f193075065c8617f4e52b3dbb0b671aedf76505d639887e961de3483c78a0e"
+  url "https://github.com/fastlane/fastlane/archive/2.194.0.tar.gz"
+  sha256 "2f9f6b7be0b50a1bfacf4b7a4540d8dc71f197d4071c87a08f5b3fce26d838a7"
   license "MIT"
   head "https://github.com/fastlane/fastlane.git"
 
@@ -12,11 +12,10 @@ class Fastlane < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "5c53b9140b9639c42b519cca2602dd2db2fccfc28cba339eebcd7896f7dd1a60"
-    sha256 cellar: :any,                 big_sur:       "291bd0b27949b22744f0352126fd86e2629850bd34c46f460830effa300c3e84"
-    sha256 cellar: :any,                 catalina:      "18bf560d6c3e2ede31bd55a1d28c44f537fa3f0face2bed581bcd5cfc4172f0d"
-    sha256 cellar: :any,                 mojave:        "9cb75404df58c541a89d0ceb2a25c6f85d20285d9cac1466162344957c6e533e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3b25be6fa43d68b2323e3b05b24dfaeeb28e01180ca1c4b8dcdeb791d0a6f2bd" # linuxbrew-core
+    sha256 cellar: :any,                 arm64_big_sur: "41fc3113c5c50b981ae82890bad71c5ba2cfe3a2e54fb9c4f3d33408325f0bfb"
+    sha256 cellar: :any,                 big_sur:       "618d9b6a706b807c2abb52ef64b92db798f0c368e1548b1744324ec5ed8b46f8"
+    sha256 cellar: :any,                 catalina:      "1ad5c557597a2c2c222839aee41d8f95a37c6c91998336732b12fca6e6b7defa"
+    sha256 cellar: :any,                 mojave:        "20cf78a32945b9dd9a539d85cf704b5673b4a6a1da60e3cc08a8e79f4a9e57a1"
   end
 
   depends_on "ruby"
@@ -42,7 +41,7 @@ class Fastlane < Formula
     terminal_notifier_dir = libexec.glob("gems/terminal-notifier-*/vendor/terminal-notifier").first
     (terminal_notifier_dir/"terminal-notifier.app").rmtree
 
-    on_macos do
+    if OS.mac?
       ln_sf(
         (Formula["terminal-notifier"].opt_prefix/"terminal-notifier.app").relative_path_from(terminal_notifier_dir),
         terminal_notifier_dir,

@@ -41,9 +41,7 @@ class Cfengine < Formula
       --without-postgresql
     ]
 
-    on_linux do
-      args << "--with-systemd-service=no"
-    end
+    args << "--with-systemd-service=no" if OS.linux?
 
     system "./configure", *args
     system "make", "install"

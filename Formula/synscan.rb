@@ -6,6 +6,11 @@ class Synscan < Formula
   license "GPL-2.0-or-later"
   revision 1
 
+  livecheck do
+    url :homepage
+    regex(/href=.*?synscan[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
+
   bottle do
     sha256 cellar: :any, arm64_big_sur: "86677760d68a0a9efc11560003b4291ff8510b55a03f76a06916c989ec1aa428"
     sha256 cellar: :any, big_sur:       "df49f836a6552dfba8d127e53d4a87cf50030c63ab906dd1f5c40f549d32bf86"
@@ -24,10 +29,9 @@ class Synscan < Formula
     ENV.append "LIBS", "-L#{Formula["libpcap"].opt_lib} -lpcap"
     system "./configure", "--prefix=#{prefix}",
                           "--with-libpcap=yes"
-    on_macos do
+    if OS.mac?
       system "make", "macos"
-    end
-    on_linux do
+    else
       system "make", "linux"
     end
     system "make", "install"

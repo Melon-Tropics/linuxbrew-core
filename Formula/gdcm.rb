@@ -31,6 +31,18 @@ class Gdcm < Formula
   uses_from_macos "expat"
   uses_from_macos "zlib"
 
+  on_linux do
+    depends_on "gcc"
+  end
+
+  fails_with gcc: "5"
+
+  # Fix build for GCC 11.  Remove with next release.
+  patch do
+    url "https://github.com/malaterre/GDCM/commit/1c971ff1697d29c63e404403d345f869768c0bdb.patch?full_index=1"
+    sha256 "ed6e5b75015b21a17eec55a0ae7bd3d62b39db234fc0d9e462f29b479a9c2c2a"
+  end
+
   def install
     ENV.cxx11
 
@@ -63,9 +75,7 @@ class Gdcm < Formula
     ]
 
     mkdir "build" do
-      on_macos do
-        ENV.append "LDFLAGS", "-undefined dynamic_lookup"
-      end
+      ENV.append "LDFLAGS", "-undefined dynamic_lookup" if OS.mac?
 
       system "cmake", "..", *args
       system "ninja"

@@ -1,8 +1,14 @@
 class Xtitle < Formula
   desc "Set window title and icon for your X terminal"
-  homepage "https://www.cs.indiana.edu/~kinzler/xtitle/"
-  url "https://www.cs.indiana.edu/~kinzler/xtitle/xtitle-1.0.4.tgz"
+  homepage "https://kinzler.com/me/xtitle/"
+  url "https://kinzler.com/me/xtitle/xtitle-1.0.4.tgz"
   sha256 "cadddef1389ba1c5e1dc7dd861545a5fe11cb397a3f692cd63881671340fcc15"
+  license "GPL-2.0-or-later"
+
+  livecheck do
+    url :homepage
+    regex(/href=.*?xtitle[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
 
   def install
     bin.install "xtitle.sh" => "xtitle"

@@ -4,7 +4,7 @@ class OpenCompletion < Formula
   url "https://github.com/moshen/open-bash-completion/archive/v1.0.4.tar.gz"
   sha256 "23a8a30f9f65f5b3eb60aa6f2d1c60d7d0a858ea753a58f31ddb51d40e16b668"
   license "MIT"
-  head "https://github.com/moshen/open-bash-completion.git"
+  head "https://github.com/moshen/open-bash-completion.git", branch: "master"
 
   def install
     bash_completion.install "open"

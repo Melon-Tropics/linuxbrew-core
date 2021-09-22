@@ -1,4 +1,6 @@
 [
   "apache-arrow",
+  "fftw",
+  "libvpx",
   "openblas"
 ]

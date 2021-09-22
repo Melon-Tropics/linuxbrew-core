@@ -3,16 +3,16 @@ class Ocrmypdf < Formula
 
   desc "Adds an OCR text layer to scanned PDF files"
   homepage "https://github.com/jbarlow83/OCRmyPDF"
-  url "https://files.pythonhosted.org/packages/fc/f5/38d150ec54a959ce786cb6b52a35cffbf02d692de36f7a692acbee920984/ocrmypdf-12.3.3.tar.gz"
-  sha256 "07ef78ff4faf9f6cf8f885076a63ee6828c1dcb05b1b73e5e46da1a70868ddc7"
+  url "https://files.pythonhosted.org/packages/04/23/d0829a2678d260dfb0b9c5dbbfa20b926d01ea35c0abfc4e36f6df2cfc12/ocrmypdf-12.5.0.tar.gz"
+  sha256 "95382f367d255f53930930ee7f7969feb915d5c3a2df2f44c5ecbebad05404b9"
   license "MPL-2.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "8ebad8fcb26525ddc170dcf7b05fa9ac7817e95f01f8427dca85d20ad9104516"
-    sha256 cellar: :any,                 big_sur:       "b546fd5552990a7a86e3f33b2298c25cbb376e6e15e11e0ab169d3487ccba6bf"
-    sha256 cellar: :any,                 catalina:      "110d5ebb17e1a9f877a4495a7d00c65756bef9308617f05b11780b4247959b3a"
-    sha256 cellar: :any,                 mojave:        "b70175b424f212b02e5170387d99c7d1ff74c38b57c158a2e1a9dd22063b5873"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d7cae63e4b5a6e2ed14de8b8f7d2ed838f987888826b9eb7762ccb294b596d3c" # linuxbrew-core
+    sha256 cellar: :any,                 arm64_big_sur: "40511e69e5c83b4cf04c1dbd3891977a47866e090b52959f3c99c59af1272a9c"
+    sha256 cellar: :any,                 big_sur:       "45367d83576bc52b3fe8cc9c65941e134d2305cdb288bda8f596f2c7f4584189"
+    sha256 cellar: :any,                 catalina:      "21b1fd7a710a5ea1ac6ce170231d66f01dc8df28b7f61e9d1df236422734a182"
+    sha256 cellar: :any,                 mojave:        "4bc7b80ca2b8cff725f91bd0516b071eea170b664d7b88ce5e7d1e58567fd7d6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0e45a0632a87ea2fcc21d139a26fd459e8b2528196db0e09c53e6c4e940e0214" # linuxbrew-core
   end
 
   depends_on "pkg-config" => :build
@@ -69,6 +69,16 @@ class Ocrmypdf < Formula
     sha256 "38a1229ca84b211d7782d1d65ad7251a9781bf24f6f6497c738c755fcfed5552"
   end
 
+  resource "importlib-metadata" do
+    url "https://files.pythonhosted.org/packages/f0/70/ca3dd67cdd368b957e73a8156f7e1a10339f9813e314cb8b4549526070da/importlib_metadata-4.8.1.tar.gz"
+    sha256 "f284b3e11256ad1e5d03ab86bb2ccd6f5339688ff17a4d797a0fe7df326f23b1"
+  end
+
+  resource "importlib-resources" do
+    url "https://files.pythonhosted.org/packages/b1/7a/b9e2309e5c619ba3da8806e43bb17873ec6eab22a3d79347778c80563028/importlib_resources-5.2.2.tar.gz"
+    sha256 "a65882a4d0fe5fbf702273456ba2ce74fe44892c25e42e057aca526b702a6d4b"
+  end
+
   resource "lxml" do
     url "https://files.pythonhosted.org/packages/e5/21/a2e4517e3d216f0051687eea3d3317557bde68736f038a3b105ac3809247/lxml-4.6.3.tar.gz"
     sha256 "39b78571b3b30645ac77b95f7c69d1bffc4cf8c3b157c435a34da72e78c82468"
@@ -80,13 +90,13 @@ class Ocrmypdf < Formula
   end
 
   resource "pikepdf" do
-    url "https://files.pythonhosted.org/packages/d0/ef/fa6757e307049680f23ac03cc9f677354b4839302459b5d60198f72d89a4/pikepdf-2.16.1.tar.gz"
-    sha256 "e24dff6af31f1eb732fcb5db4678835d1f312643996fdcd9dbeb8aca52bc0dde"
+    url "https://files.pythonhosted.org/packages/a4/5c/6770b064dbe6402397cf87f07b92a252f73099705fcf980030404767bc62/pikepdf-3.0.0.tar.gz"
+    sha256 "3c17937e230b22afa975e69130e89df2911dd1e2c7bbe200138684154e428843"
   end
 
   resource "pluggy" do
-    url "https://files.pythonhosted.org/packages/f8/04/7a8542bed4b16a65c2714bf76cf5a0b026157da7f75e87cc88774aa10b14/pluggy-0.13.1.tar.gz"
-    sha256 "15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0"
+    url "https://files.pythonhosted.org/packages/a1/16/db2d7de3474b6e37cbb9c008965ee63835bba517e22cdb8c35b5116b5ce1/pluggy-1.0.0.tar.gz"
+    sha256 "4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159"
   end
 
   resource "pycparser" do
@@ -107,6 +117,11 @@ class Ocrmypdf < Formula
   resource "tqdm" do
     url "https://files.pythonhosted.org/packages/37/e5/1b54ef934d731576d0145bc8ae22da5b410f96922cec52b91cc29d3ff1b6/tqdm-4.62.2.tar.gz"
     sha256 "a4d6d112e507ef98513ac119ead1159d286deab17dffedd96921412c2d236ff5"
+  end
+
+  resource "zipp" do
+    url "https://files.pythonhosted.org/packages/3a/9f/1d4b62cbe8d222539a84089eeab603d8e45ee1f897803a0ae0860400d6e7/zipp-3.5.0.tar.gz"
+    sha256 "f5812b1e007e48cff63449a5e9f4e7ebea716b4111f9c4f9a645f91d579bf0c4"
   end
 
   def install

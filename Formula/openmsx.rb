@@ -4,7 +4,7 @@ class Openmsx < Formula
   url "https://github.com/openMSX/openMSX/releases/download/RELEASE_17_0/openmsx-17.0.tar.gz"
   sha256 "70ec6859522d8e3bbc97227abb98c87256ecda555b016d1da85cdd99072ce564"
   license "GPL-2.0"
-  head "https://github.com/openMSX/openMSX.git"
+  head "https://github.com/openMSX/openMSX.git", branch: "master"
 
   livecheck do
     url :stable
@@ -41,18 +41,15 @@ class Openmsx < Formula
     inreplace "build/probe.py", "/usr/local", HOMEBREW_PREFIX
 
     # Help finding Tcl (https://github.com/openMSX/openMSX/issues/1082)
-    on_macos do
-      ENV["TCL_CONFIG"] = "#{MacOS.sdk_path}/System/Library/Frameworks/Tcl.framework"
-    end
+    ENV["TCL_CONFIG"] = "#{MacOS.sdk_path}/System/Library/Frameworks/Tcl.framework" if OS.mac?
 
     system "./configure"
     system "make"
 
-    on_macos do
+    if OS.mac?
       prefix.install Dir["derived/**/openMSX.app"]
       bin.write_exec_script "#{prefix}/openMSX.app/Contents/MacOS/openmsx"
-    end
-    on_linux do
+    else
       system "make", "install"
     end
   end

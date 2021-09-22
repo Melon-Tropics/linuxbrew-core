@@ -3,8 +3,8 @@ require "language/node"
 class Emscripten < Formula
   desc "LLVM bytecode to JavaScript compiler"
   homepage "https://emscripten.org/"
-  url "https://github.com/emscripten-core/emscripten/archive/2.0.29.tar.gz"
-  sha256 "9e4ce05e6c76436c28c26c974657ed3f31a4bfcfbe8af5cbcc75529d23dd5e56"
+  url "https://github.com/emscripten-core/emscripten/archive/2.0.30.tar.gz"
+  sha256 "06efb55a039c6512e95192c3924bdfa4d249fdde9a91a0029e46dda6a36cb4e1"
   license all_of: [
     "Apache-2.0", # binaryen
     "Apache-2.0" => { with: "LLVM-exception" }, # llvm
@@ -18,11 +18,11 @@ class Emscripten < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "a734c19300d30f3f373d42f0bcf8906bbe2da2f17fadc352a0c2bb13b21a4b88"
-    sha256 cellar: :any,                 big_sur:       "29ea7f93447f80de71a41c3a53369783668ac97c40bf0d10a34eb78f33d2c88b"
-    sha256 cellar: :any,                 catalina:      "58afb41a607c4645fec84cf07a5b3df4fef5080b85bee1bfbc64729cde976c42"
-    sha256 cellar: :any,                 mojave:        "2a580c64f846b9a1e3ae0b7e8ba292d5abf4b82b540424fdbe852aacdfd05dae"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ec10df7b44a0b1b5cca9d9c5125c192fe1bb508b8e9ec6cb83984aa42da7d88f" # linuxbrew-core
+    sha256 cellar: :any,                 arm64_big_sur: "baded7e41a057c18182d7fd33eb8ad9f3ee26d945f16e834e9a5fe6395bb52fb"
+    sha256 cellar: :any,                 big_sur:       "5814c4a30b5c5b44658fe25affdd447d2e8020a4092656fa56f5337dcf8d8881"
+    sha256 cellar: :any,                 catalina:      "59a8d43ae21dd4942eb65fc77658568acef5a50960371355e85c2f39a2503deb"
+    sha256 cellar: :any,                 mojave:        "c29d57a7745b55a45ca6098637d4cc8961171fed89b9f0970f23c047807c327b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "72e54f9cfdf27399c80255e215d9daf460f55c3e0c1b938f6a191112a849f859" # linuxbrew-core
   end
 
   depends_on "cmake" => :build
@@ -47,7 +47,7 @@ class Emscripten < Formula
   # See llvm resource below for instructions on how to update this.
   resource "binaryen" do
     url "https://github.com/WebAssembly/binaryen.git",
-        revision: "c2007eab91ed60ac4bc8a6a555e9dc3e76ef2242"
+        revision: "5b90e0332253ee879d16fbc29d391ad75734ecf5"
   end
 
   # emscripten needs argument '-fignore-exceptions', which is only available in llvm >= 12
@@ -58,7 +58,7 @@ class Emscripten < Formula
   # Then use the listed llvm_project_revision for the resource below.
   resource "llvm" do
     url "https://github.com/llvm/llvm-project.git",
-        revision: "8e284be04f2cd43a821289133a759afa2844f935"
+        revision: "095bbc3a5a75f2e576b6efeadae34aaca693084e"
   end
 
   def install
@@ -136,15 +136,17 @@ class Emscripten < Formula
       system "npm", "install", *Language::Node.local_npm_install_args
       rm_f "node_modules/ws/builderror.log" # Avoid references to Homebrew shims
       # Delete native GraalVM image in incompatible platforms.
-      on_macos { rm_rf "node_modules/google-closure-compiler-osx" if Hardware::CPU.arm? }
-      on_linux { rm_rf "node_modules/google-closure-compiler-linux" }
+      if OS.linux?
+        rm_rf "node_modules/google-closure-compiler-linux"
+      elsif Hardware::CPU.arm?
+        rm_rf "node_modules/google-closure-compiler-osx"
+      end
     end
 
     # Add JAVA_HOME to env_script on ARM64 macOS and Linux, so that google-closure-compiler
     # can find OpenJDK
     emscript_env = { PYTHON: Formula["python@3.9"].opt_bin/"python3" }
-    on_macos { emscript_env.merge! Language::Java.overridable_java_home_env if Hardware::CPU.arm? }
-    on_linux { emscript_env.merge! Language::Java.overridable_java_home_env }
+    emscript_env.merge! Language::Java.overridable_java_home_env if OS.linux? || Hardware::CPU.arm?
 
     %w[em++ em-config emar emcc emcmake emconfigure emlink.py emmake
        emranlib emrun emscons].each do |emscript|

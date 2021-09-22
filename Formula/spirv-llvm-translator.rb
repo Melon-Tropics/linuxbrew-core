@@ -10,7 +10,7 @@ class SpirvLlvmTranslator < Formula
     sha256 cellar: :any,                 big_sur:       "3aa5396c0620beb8eabb4a50283d29583cf6145af561edd9b7b34a51cc591a91"
     sha256 cellar: :any,                 catalina:      "aae4b068a5b0253a4c3ef285ad29c9a5d913b75ac580339b9b5f4803df25ac16"
     sha256 cellar: :any,                 mojave:        "2eb7daf015c9a3f65f962fcb7236024e726fa42ac2939dde003550cbbe85e894"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e7512c36d9336cba67a1034f4911d461020d7be86f54a02204f7b365122d8734"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e7512c36d9336cba67a1034f4911d461020d7be86f54a02204f7b365122d8734" # linuxbrew-core
   end
 
   depends_on "cmake" => :build

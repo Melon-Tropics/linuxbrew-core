@@ -4,15 +4,14 @@ class Julia < Formula
   url "https://github.com/JuliaLang/julia/releases/download/v1.6.2/julia-1.6.2.tar.gz"
   sha256 "d56422ac75cbd00a9f69ca9ffd5b6b35c8aeded8312134ef45ffbba828918b5e"
   license all_of: ["MIT", "BSD-3-Clause", "Apache-2.0", "BSL-1.0"]
-  revision 1
+  revision 2
   head "https://github.com/JuliaLang/julia.git"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 big_sur:      "07cef06b083672c8335143c4bde3f9e857d8c644140080a105b9812f77fcba8c"
-    sha256 cellar: :any,                 catalina:     "3a1b8e8ff03cfed29f2ea415d4782a38444d99c14100d1e85cae37c48e4965c1"
-    sha256 cellar: :any,                 mojave:       "a54f0feda6477176f7018675a1439976016e4b93ea607221dec01091b0300fc1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "f44e0cb6a64ff752ce80ee186afb010d5e136e2207eca6257219bcad0169de52" # linuxbrew-core
+    sha256 cellar: :any,                 big_sur:      "3d27aecf842374458a6f7af2936bf8f781d3f856de5aa7c2d9b88e7c06f3b1c1"
+    sha256 cellar: :any,                 catalina:     "5ec6bcbbb68add91ba2922ed81634dc59c8778f9665a13bd716979e629f414c5"
+    sha256 cellar: :any,                 mojave:       "b956af7c55f00b3ccc7da80a87589d2edc56254e2a384c74e78a9c096785616a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "aed0a70db333329f6e9cbffe50f6f4d3ac1d5f9da4bd30f10894fa627afb4fec" # linuxbrew-core
   end
 
   depends_on "python@3.9" => :build
@@ -47,6 +46,12 @@ class Julia < Formula
 
   fails_with gcc: "5"
 
+  # Fix compatibility with LibGit2 1.2.0+
+  patch do
+    url "https://raw.githubusercontent.com/archlinux/svntogit-community/cec6c2023b66d88c013677bfa9965cce8e49e7ab/trunk/julia-libgit-1.2.patch"
+    sha256 "c57ea92a11fa8dac72229e6a912d2372ec0d98d63486426fe3bdeeb795de48f7"
+  end
+
   def install
     # Build documentation available at
     # https://github.com/JuliaLang/julia/blob/v#{version}/doc/build/build.md
@@ -57,6 +62,7 @@ class Julia < Formula
       VERBOSE=1
       USE_BINARYBUILDER=0
       prefix=#{prefix}
+      sysconfdir=#{etc}
       USE_SYSTEM_CSL=1
       USE_SYSTEM_LLVM=1
       USE_SYSTEM_PCRE=1
@@ -85,16 +91,34 @@ class Julia < Formula
       MACOSX_VERSION_MIN=#{MacOS.version}
     ]
 
+    # Set MARCH and JULIA_CPU_TARGET to ensure Julia works on machines we distribute to.
+    # Values adapted from https://github.com/JuliaCI/julia-buildbot/blob/master/master/inventory.py
+    march = if build.head?
+      "native"
+    elsif Hardware::CPU.arm?
+      "armv8-a"
+    else
+      Hardware.oldest_cpu
+    end
+    args << "MARCH=#{march}"
+
+    cpu_targets = ["generic"]
+    cpu_targets += if Hardware::CPU.arm?
+      %w[cortex-a57 thunderx2t99 armv8.2-a,crypto,fullfp16,lse,rdm]
+    else
+      %w[sandybridge,-xsaveopt,clone_all haswell,-rdrnd,base(1)]
+    end
+    args << "JULIA_CPU_TARGET=#{cpu_targets.join(";")}" if build.stable?
+
     # Stable uses `libosxunwind` which is not in Homebrew/core
     # https://github.com/JuliaLang/julia/pull/39127
-    on_macos { args << "USE_SYSTEM_LIBUNWIND=1" if build.head? }
-    on_linux { args << "USE_SYSTEM_LIBUNWIND=1" }
+    args << "USE_SYSTEM_LIBUNWIND=1" if OS.linux? || build.head?
 
     args << "TAGGED_RELEASE_BANNER=Built by #{tap.user} (v#{pkg_version})"
 
     gcc = Formula["gcc"]
     gcclibdir = gcc.opt_lib/"gcc"/gcc.any_installed_version.major
-    on_macos do
+    if OS.mac?
       deps.map(&:to_formula).select(&:keg_only?).map(&:opt_lib).each do |libdir|
         ENV.append "LDFLAGS", "-Wl,-rpath,#{libdir}"
       end
@@ -102,9 +126,7 @@ class Julia < Formula
       # List these two last, since we want keg-only libraries to be found first
       ENV.append "LDFLAGS", "-Wl,-rpath,#{HOMEBREW_PREFIX}/lib"
       ENV.append "LDFLAGS", "-Wl,-rpath,/usr/lib"
-    end
-
-    on_linux do
+    else
       ENV.append "LDFLAGS", "-Wl,-rpath,#{opt_lib}"
       ENV.append "LDFLAGS", "-Wl,-rpath,#{opt_lib}/julia"
 
@@ -122,7 +144,7 @@ class Julia < Formula
 
     # Remove library versions from MbedTLS_jll, nghttp2_jll and libLLVM_jll
     # https://git.archlinux.org/svntogit/community.git/tree/trunk/julia-hardcoded-libs.patch?h=packages/julia
-    %w[MbedTLS nghttp2].each do |dep|
+    %w[MbedTLS nghttp2 LibGit2 OpenLibm].each do |dep|
       (buildpath/"stdlib").glob("**/#{dep}_jll.jl") do |jll|
         inreplace jll, %r{@rpath/lib(\w+)(\.\d+)*\.dylib}, "@rpath/lib\\1.dylib"
         inreplace jll, /lib(\w+)\.so(\.\d+)*/, "lib\\1.so"
@@ -135,7 +157,7 @@ class Julia < Formula
 
     system "make", *args, "install"
 
-    on_linux do
+    if OS.linux?
       # Replace symlinks referencing Cellar paths with ones using opt paths
       deps.reject(&:build?).map(&:to_formula).map(&:opt_lib).each do |libdir|
         (lib/"julia").children.each do |so|

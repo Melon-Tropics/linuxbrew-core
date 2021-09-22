@@ -17,7 +17,7 @@ class TerraformAT011 < Formula
 
   deprecate! date: "2021-04-14", because: :unsupported
 
-  depends_on "go" => :build
+  depends_on "go@1.16" => :build
   depends_on "gox" => :build
 
   on_linux do
@@ -36,9 +36,10 @@ class TerraformAT011 < Formula
       ENV.delete "AWS_ACCESS_KEY"
       ENV.delete "AWS_SECRET_KEY"
 
-      os = "darwin"
-      on_linux do
-        os = "linux"
+      os = if OS.mac?
+        "darwin"
+      else
+        "linux"
       end
       ENV["XC_OS"] = os
       ENV["XC_ARCH"] = "amd64"

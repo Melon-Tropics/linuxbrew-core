@@ -1,16 +1,16 @@
 class Notcurses < Formula
   desc "Blingful character graphics/TUI library"
   homepage "https://nick-black.com/dankwiki/index.php/Notcurses"
-  url "https://github.com/dankamongmen/notcurses/archive/refs/tags/v2.3.17.tar.gz"
-  sha256 "81db9d13b515d01b134619f3e69cc1efe9f326030c4e49128131d3288ee68e33"
+  url "https://github.com/dankamongmen/notcurses/archive/refs/tags/v2.4.1.tar.gz"
+  sha256 "982fc662f7239cff6713ce0f17f1db7c76a3de1644196438de6bb276bec65704"
 
   license "Apache-2.0"
 
   bottle do
-    sha256 arm64_big_sur: "3206f7d892bd1b7030aaad87456d38e792e7a4f1db6a1bf236812fb806fca966"
-    sha256 big_sur:       "c3d97b3bb9d3ad6c5c71ea9b8db6af548d2f26d621f63d2fcb3b4500623deb14"
-    sha256 catalina:      "631a30874cf16b202102fb0094b38e641f72554b9043277115b70ee8b449b7fe"
-    sha256 mojave:        "7e5ba57cea44e6377410f50d119eb372656944e874fb1391efbce66e01fb6802"
+    sha256 arm64_big_sur: "b9d7e032bc3b18b283a505d899e177c5d3c3d6c9a7ba924a53ddc49aca3b4bd4"
+    sha256 big_sur:       "b58b4340122f6edfd62469597482790b32ebe44c0a30b3e1a5477ab207edca0e"
+    sha256 catalina:      "8d781d154b2d9dcf3afa2531efaebd3d520bf66dd42baabdbbe038b4d0d741f2"
+    sha256 mojave:        "cb43c7acb9f65f35bb251bfbe605c06f69f9e4de56bf91bc285fe7357c89b075"
   end
 
   depends_on "cmake" => :build
@@ -23,6 +23,8 @@ class Notcurses < Formula
   depends_on "readline"
   uses_from_macos "zlib"
 
+  fails_with gcc: "5"
+
   def install
     system "cmake", "-S", ".", "-B", "build", *std_cmake_args, "-DCMAKE_INSTALL_RPATH=#{rpath}"
     system "cmake", "--build", "build"
@@ -30,11 +32,9 @@ class Notcurses < Formula
   end
 
   test do
-    # without the TERM definition, Notcurses is like a small child, lost in a
-    # horrible mall. of course, if the tests are run in some non-xterm
-    # environment, this choice might prove unfortunate.
-    # you have no chance to survive. make your time.
-    ENV["TERM"] = "xterm"
-    assert_match "notcurses", shell_output("#{bin}/notcurses-info")
+    # current homebrew CI runs with TERM=dumb. given that Notcurses explicitly
+    # does not support dumb terminals (i.e. those lacking the "cup" terminfo
+    # capability), we expect a failure here. all output will go to stderr.
+    assert_empty shell_output("#{bin}/notcurses-info", 1)
   end
 end

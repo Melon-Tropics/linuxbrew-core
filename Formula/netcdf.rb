@@ -6,7 +6,7 @@ class Netcdf < Formula
   sha256 "679635119a58165c79bb9736f7603e2c19792dd848f19195bf6881492246d6d5"
   license "BSD-3-Clause"
   revision 2
-  head "https://github.com/Unidata/netcdf-c.git"
+  head "https://github.com/Unidata/netcdf-c.git", branch: "main"
 
   livecheck do
     url "https://www.unidata.ucar.edu/downloads/netcdf/"
@@ -103,15 +103,11 @@ class Netcdf < Formula
       lib/"pkgconfig/netcdf.pc", lib/"pkgconfig/netcdf-fortran.pc",
       lib/"cmake/netCDF/netCDFConfig.cmake",
       lib/"libnetcdf.settings", lib/"libnetcdf-cxx.settings"
-    ], %r{#{HOMEBREW_SHIMS_PATH}/[^/]+/super/#{ENV.cc}}, ENV.cc
+    ], Superenv.shims_path/ENV.cc, ENV.cc
 
-    on_linux do
-      inreplace bin/"ncxx4-config",
-                %r{#{HOMEBREW_SHIMS_PATH}/[^/]+/super/#{Regexp.escape(ENV.cxx)}},
-                ENV.cxx
-    end
-
-    on_macos do
+    if OS.linux?
+      inreplace bin/"ncxx4-config", Superenv.shims_path/ENV.cxx, ENV.cxx
+    else
       # SIP causes system Python not to play nicely with @rpath
       libnetcdf = (lib/"libnetcdf.dylib").readlink
       macho = MachO.open("#{lib}/libnetcdf-cxx4.dylib")

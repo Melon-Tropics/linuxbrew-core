@@ -1,8 +1,8 @@
 class Xorgproto < Formula
   desc "X.Org: Protocol Headers"
   homepage "https://www.x.org/"
-  url "https://xorg.freedesktop.org/archive/individual/proto/xorgproto-2021.4.tar.bz2"
-  sha256 "0f5157030162844b398e7ce69b8bb967c2edb8064b0a9c9bb5517eb621459fbf"
+  url "https://xorg.freedesktop.org/archive/individual/proto/xorgproto-2021.5.tar.bz2"
+  sha256 "aa2f663b8dbd632960b24f7477aa07d901210057f6ab1a1db5158732569ca015"
   license "MIT"
 
   livecheck do
@@ -11,7 +11,7 @@ class Xorgproto < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "f8a7c3b5c61c48affa144576747aa93a18c49f8b861b782e45aeb643a2708363" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "647f61164574adaac89ee12341032122025e3cf8ce97d2e346e8af3e2196146a" # linuxbrew-core
   end
 
   depends_on "pkg-config" => [:build, :test]

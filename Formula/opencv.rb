@@ -16,6 +16,7 @@ class Opencv < Formula
     sha256 big_sur:       "a66bb42ee8e14bc77656b330267ad0bf2c83bd2df0abb0f1ad6da357bcbc94f2"
     sha256 catalina:      "66bfff6d709f9f0dc0875701a05df2fc2c052f48b67a6c91c106a58ac4be1932"
     sha256 mojave:        "bdd113015b81013f74206b0be03ab37a6d57af9cf924592c8f61658d63aada63"
+    sha256 x86_64_linux:  "973c8de4c982df429fbe9f855d3cff9e5a3ebe62f2172ad9dd8cb66cf0ef3a23" # linuxbrew-core
   end
 
   depends_on "cmake" => :build
@@ -92,12 +93,12 @@ class Opencv < Formula
     ]
 
     # Disable precompiled headers and force opencv to use brewed libraries on Linux
-    unless OS.mac?
+    if OS.linux?
       args << "-DENABLE_PRECOMPILED_HEADERS=OFF"
       args << "-DJPEG_LIBRARY=#{Formula["libjpeg"].opt_lib}/libjpeg.so"
       args << "-DOpenBLAS_LIB=#{Formula["openblas"].opt_lib}/libopenblas.so"
       args << "-DOPENEXR_ILMIMF_LIBRARY=#{Formula["openexr"].opt_lib}/libIlmImf.so"
-      args << "-DOPENEXR_ILMTHREAD_LIBRARY=#{Formula["ilmbase"].opt_lib}/libIlmThread.so"
+      args << "-DOPENEXR_ILMTHREAD_LIBRARY=#{Formula["openexr"].opt_lib}/libIlmThread.so"
       args << "-DPNG_LIBRARY=#{Formula["libpng"].opt_lib}/libpng.so"
       args << "-DPROTOBUF_LIBRARY=#{Formula["protobuf"].opt_lib}/libprotobuf.so"
       args << "-DTIFF_LIBRARY=#{Formula["libtiff"].opt_lib}/libtiff.so"
@@ -111,17 +112,15 @@ class Opencv < Formula
     end
 
     mkdir "build" do
-      shim_prefix_regex = %r{#{HOMEBREW_SHIMS_PATH}/[^/]+/super/}o
-
       system "cmake", "..", *args
-      inreplace "modules/core/version_string.inc", shim_prefix_regex, ""
+      inreplace "modules/core/version_string.inc", Superenv.shims_path, ""
 
       system "make"
       system "make", "install"
 
       system "make", "clean"
       system "cmake", "..", "-DBUILD_SHARED_LIBS=OFF", *args
-      inreplace "modules/core/version_string.inc", shim_prefix_regex, ""
+      inreplace "modules/core/version_string.inc", Superenv.shims_path, ""
 
       system "make"
       lib.install Dir["lib/*.a"]

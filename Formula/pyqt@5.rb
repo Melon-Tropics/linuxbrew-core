@@ -11,6 +11,7 @@ class PyqtAT5 < Formula
     sha256 cellar: :any, big_sur:       "57e1fd479cc069392daab557c213607bcb45fae6494fce0898803be3696bb24b"
     sha256 cellar: :any, catalina:      "70bc904d9efee5ec5a2e6eec8d5cf7daf1d96790f13b41fa4027d42f62ebd6d4"
     sha256 cellar: :any, mojave:        "d824441486b767137fcad5620117299a7e3dd1423726a31c637cde4b1fcf2d39"
+    sha256               x86_64_linux:  "caba98722fc8ca9af000927e47c59b13f52122ae7919f8848e859f0f0cd36a5c" # linuxbrew-core
   end
 
   depends_on "pyqt-builder" => :build
@@ -77,7 +78,7 @@ class PyqtAT5 < Formula
     end
 
     components = %w[3d chart datavis networkauth purchasing]
-    on_macos { components << "webengine" unless Hardware::CPU.arm? }
+    components << "webengine" if OS.mac? && !Hardware::CPU.arm?
     components.each do |p|
       resource(p).stage do
         inreplace "pyproject.toml", "[tool.sip.project]",

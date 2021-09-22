@@ -3,16 +3,16 @@ class PreCommit < Formula
 
   desc "Framework for managing multi-language pre-commit hooks"
   homepage "https://pre-commit.com/"
-  url "https://files.pythonhosted.org/packages/f9/3e/14f27cbad8703a2bb3229bf94926582509c190d750afb3ac3d318551829b/pre_commit-2.14.1.tar.gz"
-  sha256 "7977a3103927932d4823178cbe4719ab55bb336f42a9f3bb2776cff99007a117"
+  url "https://files.pythonhosted.org/packages/63/9e/f139fe6176b417e8c725f0ecfe5021e2edc88c5e00358aacbf812f3224ed/pre_commit-2.15.0.tar.gz"
+  sha256 "3c25add78dbdfb6a28a651780d5c311ac40dd17f160eb3954a0c59da40a505a7"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "a2cd8d4a231f973aedc76fe8bcd27e44f478de246847848fdc783a52d59b7e9a"
-    sha256 cellar: :any,                 big_sur:       "844c53119af074d8f385d94f53e1a25d7f991af4e9767834092919954edc8eec"
-    sha256 cellar: :any,                 catalina:      "5ed43858c0bb46cb0a50b079adeae0d746d8db32dc58b48f9788de3781f6694d"
-    sha256 cellar: :any,                 mojave:        "b27a0f03b9cbff195804c7673da048f5e68383c56f7b90788ef298aec0ee2967"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fc02552c3eb53c31259eca0631ee2748ea5ea686539f7c6b0b9f9f0ad8fd331e" # linuxbrew-core
+    sha256 cellar: :any,                 arm64_big_sur: "013932b6c31d3f82d7b99bd8f49afdbbedd0464d711cddfc09a484330c665069"
+    sha256 cellar: :any,                 big_sur:       "0112b3cab8adddf225371b4416b2e8579f251ca6d38c2e8fcf6c573a248abbb7"
+    sha256 cellar: :any,                 catalina:      "00abbd23f79197175b2765e243ff9f7563c668eb57842ce5d1b6cc8ae3711d9c"
+    sha256 cellar: :any,                 mojave:        "334f75bd2eaa766f541774a4bb55c1f0ae070cd1c66602b5a7a8b107531259c9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cd233393b1d895be2d52f64f4e984365d02351eabc30665cd941b1ee59167ea4" # linuxbrew-core
   end
 
   depends_on "libyaml"
@@ -50,8 +50,8 @@ class PreCommit < Formula
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/58/cb/ee4234464290e3dee893cf37d1adc87c24ade86ff6fc55f04a9bf9f1ec4f/platformdirs-2.2.0.tar.gz"
-    sha256 "632daad3ab546bd8e6af0537d09805cec458dce201bccfe23012df73332e181e"
+    url "https://files.pythonhosted.org/packages/e2/d4/c6ffe89de09851892b1418dc22f6ab019b7b6f362532ab813c262e1722bb/platformdirs-2.3.0.tar.gz"
+    sha256 "15b056538719b1c94bdaccb29e5f81879c7f7f0f4a153f46086d155dffcd4f0f"
   end
 
   resource "PyYAML" do
@@ -90,7 +90,7 @@ class PreCommit < Formula
   def post_install
     xy = Language::Python.major_minor_version Formula["python@3.9"].opt_bin/"python3"
     dirs_to_fix = [libexec/"lib/python#{xy}"]
-    on_linux { dirs_to_fix << libexec/"bin" }
+    dirs_to_fix << (libexec/"bin") if OS.linux?
     dirs_to_fix.each do |folder|
       folder.each_child do |f|
         next unless f.symlink?

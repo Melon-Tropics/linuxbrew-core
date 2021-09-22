@@ -1,8 +1,8 @@
 class Kotlin < Formula
   desc "Statically typed programming language for the JVM"
   homepage "https://kotlinlang.org/"
-  url "https://github.com/JetBrains/kotlin/releases/download/v1.5.30/kotlin-compiler-1.5.30.zip"
-  sha256 "25eebdb9bb2e165e4ba8efbf8ff943c45d4fc39dbffc2c1caa059e8dd813675f"
+  url "https://github.com/JetBrains/kotlin/releases/download/v1.5.31/kotlin-compiler-1.5.31.zip"
+  sha256 "661111286f3e5ac06aaf3a9403d869d9a96a176b62b141814be626a47249fe9e"
   license "Apache-2.0"
 
   livecheck do
@@ -11,15 +11,15 @@ class Kotlin < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "186b452c0615808a3fe9f4fe5340d555717798d88b7616854a56321469662549" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "448f0d489782684ddafad3c88146b3df37ebbc58ee0b0ac2450f6a7c871194e8" # linuxbrew-core
   end
 
   depends_on "openjdk"
 
   def install
     libexec.install "bin", "build.txt", "lib"
-    rm Dir["#{libexec}/bin/*.bat"]
-    bin.install Dir["#{libexec}/bin/*"]
+    rm Dir[libexec/"bin/*.bat"]
+    bin.install Dir[libexec/"bin/*"]
     bin.env_script_all_files libexec/"bin", Language::Java.overridable_java_home_env
     prefix.install "license"
   end
@@ -30,8 +30,8 @@ class Kotlin < Formula
         println("Hello World!")
       }
     EOS
-    system "#{bin}/kotlinc", "test.kt", "-include-runtime", "-d", "test.jar"
-    system "#{bin}/kotlinc-js", "test.kt", "-output", "test.js"
-    system "#{bin}/kotlinc-jvm", "test.kt", "-include-runtime", "-d", "test.jar"
+    system bin/"kotlinc", "test.kt", "-include-runtime", "-d", "test.jar"
+    system bin/"kotlinc-js", "test.kt", "-output", "test.js"
+    system bin/"kotlinc-jvm", "test.kt", "-include-runtime", "-d", "test.jar"
   end
 end

@@ -4,6 +4,11 @@ class Ioke < Formula
   url "https://ioke.org/dist/ioke-P-ikj-0.4.0.tar.gz"
   sha256 "701d24d8a8d0901cde64f11c79605c21d43cafbfb2bdd86765b664df13daec7c"
 
+  livecheck do
+    url "https://ioke.org/download.html"
+    regex(/href=.*?ioke-P-ikj[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
+
   depends_on "openjdk"
 
   def install

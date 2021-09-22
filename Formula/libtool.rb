@@ -37,14 +37,12 @@ class Libtool < Formula
       --enable-ltdl-install
     ]
 
-    on_macos do
-      args << "--program-prefix=g"
-    end
+    args << "--program-prefix=g" if OS.mac?
 
     system "./configure", *args
     system "make", "install"
 
-    on_macos do
+    if OS.mac?
       %w[libtool libtoolize].each do |prog|
         (libexec/"gnubin").install_symlink bin/"g#{prog}" => prog
         (libexec/"gnuman/man1").install_symlink man1/"g#{prog}.1" => "#{prog}.1"
@@ -52,12 +50,12 @@ class Libtool < Formula
       libexec.install_symlink "gnuman" => "man"
     end
 
-    on_linux do
+    if OS.linux?
       bin.install_symlink "libtool" => "glibtool"
       bin.install_symlink "libtoolize" => "glibtoolize"
 
       # Avoid references to the Homebrew shims directory
-      inreplace bin/"libtool", HOMEBREW_SHIMS_PATH/"linux/super/", "/usr/bin/"
+      inreplace bin/"libtool", Superenv.shims_path, "/usr/bin"
     end
   end
 

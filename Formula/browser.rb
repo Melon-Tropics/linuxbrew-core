@@ -7,10 +7,8 @@ class Browser < Formula
   version "7"
 
   def install
-    on_linux do
-      # https://gist.github.com/defunkt/318247#gistcomment-3760018
-      inreplace "browser", "open", "xdg-open"
-    end
+    # https://gist.github.com/defunkt/318247#gistcomment-3760018
+    inreplace "browser", "open", "xdg-open" if OS.linux?
     bin.install "browser"
   end
 

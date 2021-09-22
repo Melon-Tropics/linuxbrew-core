@@ -7,6 +7,11 @@ class Sbuild < Formula
   license "Apache-2.0"
   revision 2
 
+  livecheck do
+    url :homepage
+    regex(/href=.*?sbuild[._-]v?(\d+(?:\.\d+)+)(?:[._-]dist)?\.zip/i)
+  end
+
   depends_on "openjdk"
 
   def install

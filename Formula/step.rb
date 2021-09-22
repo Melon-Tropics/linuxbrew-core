@@ -1,23 +1,23 @@
 class Step < Formula
   desc "Crypto and x509 Swiss-Army-Knife"
   homepage "https://smallstep.com"
-  url "https://github.com/smallstep/cli/releases/download/v0.17.1/step_0.17.1.tar.gz"
-  sha256 "e47c889314093d499a560aacd8e336134af77bffaafe21b55d804357d075efce"
+  url "https://github.com/smallstep/cli/releases/download/v0.17.2/step_0.17.2.tar.gz"
+  sha256 "a44ae9db467284c924f91f965a292ecadf404f3ffcde8953abb6b158fa518d91"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "bdf26f0b0ee58be99c1db838a7bfe5a890e8e703dacf40434a47b54557f93762"
-    sha256 cellar: :any_skip_relocation, big_sur:       "ac72b71cfd7810d31add2766dfc299b07849feeac1e83a45128e02c103fc0720"
-    sha256 cellar: :any_skip_relocation, catalina:      "89368c7f4acd2d61c677d5f71170f6b415f40ee3fbce530aed1ad04fdf02f054"
-    sha256 cellar: :any_skip_relocation, mojave:        "197f47f56213f723686ac6564f524df66129501f60ca7d354b9dc3fb10b6df90"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "25b0dc6187ccec3c4c6ba93e1a1cbabacd6b0a40ed485876ab54bbbbc59b05ad" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "51482c4a5cb33325e3cc7ae1fb7f527802b2da7cfbc97f3995845bf1884b3b1a"
+    sha256 cellar: :any_skip_relocation, big_sur:       "56bdfb982646a0b950d6d483e8e91e1177a344feb0e95e5d7aeeb716353a7c92"
+    sha256 cellar: :any_skip_relocation, catalina:      "b687a18ded3bb9c3f9de340761f5066a28e5c6d8d6c4617dc9d19a181a903fb6"
+    sha256 cellar: :any_skip_relocation, mojave:        "57055b596613e9271756c824cc27c2d9617df380d71ea273276d86f8f17f7b9d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "adc0f8323c2330b47ca569b2251247fc4052d66d0dca996fb0ab0f288d615b44" # linuxbrew-core
   end
 
   depends_on "go" => :build
 
   resource "certificates" do
-    url "https://github.com/smallstep/certificates/releases/download/v0.17.1/step-ca_0.17.1.tar.gz"
-    sha256 "6ff7d52b3e8cb1972242701ac348d00248844e4efb68a8b829311986462a2b7e"
+    url "https://github.com/smallstep/certificates/releases/download/v0.17.2/step-ca_0.17.2.tar.gz"
+    sha256 "78e32437a200a563046510f5adec085f29e744db150e88a2b214905d4f423ef2"
   end
 
   def install

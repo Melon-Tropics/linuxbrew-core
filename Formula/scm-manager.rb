@@ -10,6 +10,7 @@ class ScmManager < Formula
     rebuild 1
   end
 
+  depends_on arch: :x86_64 # openjdk@8 is not supported on ARM
   depends_on "openjdk@8"
 
   resource "client" do

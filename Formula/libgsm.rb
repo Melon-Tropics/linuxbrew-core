@@ -17,14 +17,16 @@ class Libgsm < Formula
     sha256 cellar: :any, high_sierra:   "5a2b52e7ed65f005f32bb56519dd425b26e537f888b49402322fe1424f0901e4"
   end
 
-  if OS.mac?
+  on_macos do
     # Builds a dynamic library for gsm, this package is no longer developed
     # upstream. Patch taken from Debian and modified to build a dylib.
     patch do
       url "https://gist.githubusercontent.com/dholm/5840964/raw/1e2bea34876b3f7583888b2284b0e51d6f0e21f4/gistfile1.txt"
       sha256 "3b47c28991df93b5c23659011e9d99feecade8f2623762041a5dcc0f5686ffd9"
     end
-  else
+  end
+
+  on_linux do
     patch do
       url "https://gist.githubusercontent.com/iMichka/9aac903922bc0169f2f6ce4c848d2976/raw/63d5708692e1494daaf573df31be8695875ef4ec/libgsm"
       sha256 "ccf749390d91511a5b1f3184f80d8a25898b77b661426eb1a5f3fd4704938908"

@@ -4,13 +4,14 @@ class GupnpTools < Formula
   url "https://download.gnome.org/sources/gupnp-tools/0.10/gupnp-tools-0.10.1.tar.xz"
   sha256 "4ea96d167462b3a548efc4fc4ea089fe518d7d29be349d1cce8982b9ffb53b4a"
   license all_of: ["GPL-2.0-or-later", "LGPL-2.0-or-later"]
+  revision 1
 
   bottle do
-    sha256 arm64_big_sur: "d56367e5b3d25701a48cf3d5201df841117e4d25003094766ff3e2267f81bc48"
-    sha256 big_sur:       "df4b690dbadf285baee9134c1889ca57bc57b0e527d8fb54a33ea6a980d7fafd"
-    sha256 catalina:      "e6d6066be38a1fd40b1ec0510306dcea50291348cc5cad25b5e899fd20ff6467"
-    sha256 mojave:        "5b04336ba67f125c40593657d1e60ead0aa0578265efb9d4fe254f9e06781b78"
-    sha256 x86_64_linux:  "47983d01175a2248d9b422e579469ee3a8000dd23586f280d9a9d57019664e9f" # linuxbrew-core
+    sha256 arm64_big_sur: "d274a21bebdd1eecbb3663acc978b7db9a02fa82dd1bf6a6ae580d6342b41d86"
+    sha256 big_sur:       "43bac77ff6e404437bc158f13f15e041ec557b34d8fe98ce7f83062e145f73ba"
+    sha256 catalina:      "fda7b6fe97dcfa2710e8a0a7065b9c07e208068f7244c1a04a02f1b3d02e3127"
+    sha256 mojave:        "3845534111bcb148335d74b0417ecb0ebf6a0dc328232ed0a74b39e703ad25ef"
+    sha256 x86_64_linux:  "8218188f5c676e4771680dfaa3c94de766442108db8728762685ddf6b7535c93" # linuxbrew-core
   end
 
   depends_on "meson" => :build

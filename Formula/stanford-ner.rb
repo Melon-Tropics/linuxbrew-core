@@ -5,6 +5,15 @@ class StanfordNer < Formula
   sha256 "06dd9f827106359bad90049c6952137502bc59ed40b9c88b448831b32cf55b2a"
   license "GPL-2.0-or-later"
 
+  livecheck do
+    url :homepage
+    regex(/href=.*?stanford-ner[._-]v?(\d+(?:\.\d+)+)\.zip/i)
+  end
+
+  bottle do
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "ff677742e4d2a82c25841c06c9df83521334df943658f129f85580f420feb0bb" # linuxbrew-core
+  end
+
   depends_on "openjdk"
 
   def install

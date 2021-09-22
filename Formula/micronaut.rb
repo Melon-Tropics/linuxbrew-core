@@ -1,9 +1,10 @@
 class Micronaut < Formula
   desc "Modern JVM-based framework for building modular microservices"
   homepage "https://micronaut.io/"
-  url "https://github.com/micronaut-projects/micronaut-starter/archive/v2.5.11.tar.gz"
-  sha256 "1b55906c208b15354e4b7cff58a3c6d4df9097d23d8c8055ecd5bf39315e5a94"
+  url "https://github.com/micronaut-projects/micronaut-starter/archive/v3.0.1.tar.gz"
+  sha256 "61b58f5fd46c2986929aba75add112e20fe69d80b1425f6eb4389edead36887f"
   license "Apache-2.0"
+  revision 1
 
   livecheck do
     url :stable
@@ -11,18 +12,15 @@ class Micronaut < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "bfb6024542007b56ab90871dd1a4c7040a146939d3c71430213989a6de313364"
-    sha256 cellar: :any_skip_relocation, big_sur:       "3aee5964dc81df9cc1b1fc697ddf9b640f44da2ddf15f0800fb60078d918b8f1"
-    sha256 cellar: :any_skip_relocation, catalina:      "54e0cfead37aa6cbe94c1e57c462511d59c4ef1dbf22e4c7e00be4e9f5453877"
-    sha256 cellar: :any_skip_relocation, mojave:        "a333cea13aaac477d86b7c97ad52a6a81e05adf2a8f422f6361ed832e355185b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "20e6a8a6d169411ec845515da12b2746f01ebd25e863b25d6c7a65ce31359805" # linuxbrew-core
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "04070f1c0d03d4929534bd0ed36447fc50c3fcc9ec2fe95eb88ecceb211379b1"
+    sha256 cellar: :any_skip_relocation, big_sur:       "493d84f3de354af6511804928d2105aa0d777f842795dca0332ec91a50ac74ea"
+    sha256 cellar: :any_skip_relocation, catalina:      "eb811d45baba54fb60f6a3987de1ae72ad22ec14b0f6f4e3b5fa23a03b304b02"
+    sha256 cellar: :any_skip_relocation, mojave:        "d671f193cc23d3e5b72d746a954d8603ea5db224e321d1f33248eff2195fbe45"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8a17f2840067063c419b77be91b6afaf5257972288ece1b021b1226696dcfa65" # linuxbrew-core
   end
 
-  if Hardware::CPU.arm?
-    depends_on "openjdk@11"
-  else
-    depends_on "openjdk"
-  end
+  # Uses a hardcoded list of supported JDKs. Try switching to `openjdk` on update.
+  depends_on "openjdk@11"
 
   def install
     system "./gradlew", "micronaut-cli:assemble", "-x", "test"
@@ -32,7 +30,7 @@ class Micronaut < Formula
     mv "starter-cli/build/exploded/lib", libexec/"lib"
 
     bash_completion.install "starter-cli/build/exploded/bin/mn_completion"
-    (bin/"mn").write_env_script libexec/"bin/mn", Language::Java.overridable_java_home_env
+    (bin/"mn").write_env_script libexec/"bin/mn", Language::Java.overridable_java_home_env("11")
   end
 
   test do
